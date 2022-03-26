@@ -5,8 +5,10 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return 'Index'
+    # return render_template('index.html')
+    return 'Index'  # placeholder
 
 @main.route('/profile')
 def profile():
-    return 'Profile'
+    # return render_template('profile.html')
+    return 'Profile'  # placeholder
