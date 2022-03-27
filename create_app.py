@@ -68,7 +68,8 @@ def create_app():
         for profile in users.values():
             new_user = User(username=profile['username'],
                             name=profile['name'],
-                            password=generate_password_hash('password', method='sha256'))
+                            password=generate_password_hash('password', method='sha256'),
+                            about_me=fake.paragraph(nb_sentences=5))
             db.session.add(new_user)
 
         print(f'Committing {len(users)} users into DB.')
