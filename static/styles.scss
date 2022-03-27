@@ -141,52 +141,52 @@ form {
   }
 }
 
-  .profile-title {
-    display: block;
-    border-bottom: 1px solid grey;
-    width: 100%;
+.profile-title {
+  display: block;
+  border-bottom: 1px solid grey;
+  width: 100%;
 
-    .profile-username {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-
-    .profile-timestamp {
-      padding-left: 1em;
-      font-size: 0.9em;
-
-      &.offline {
-        color: dimgrey;
-      }
-
-      &.online {
-        color: #0C8C00;
-        font-weight: 600;
-      }
-    }
+  .profile-username {
+    font-size: 1.5em;
+    font-weight: bold;
   }
 
-  .profile-left {
-    padding: 0.8em;
-    width: fit-content;
-    border-right: 1px solid grey;
+  .profile-timestamp {
+    padding-left: 1em;
+    font-size: 0.9em;
+  }
+}
 
-    .profile-details {
-      font-size: 0.7em;
-      text-align: center;
-    }
+.offline {
+  color: dimgrey;
+}
 
-    .profile-picture {
-      margin: 0.8em;
-      max-width: 10em;
-      max-height: 10em;
-      filter: drop-shadow(5px 7px 6px rgb(0 0 0 / 0.1));;
-    }
+.online {
+  color: #0C8C00;
+  font-weight: 600;
+}
+
+.profile-left {
+  padding: 0.8em;
+  width: fit-content;
+  border-right: 1px solid grey;
+
+  .profile-details {
+    font-size: 0.7em;
+    text-align: center;
   }
 
-  .profile-bio, .profile-left {
-    display: inline-block;
+  .profile-picture {
+    margin: 0.8em;
+    max-width: 10em;
+    max-height: 10em;
+    filter: drop-shadow(5px 7px 6px rgb(0 0 0 / 0.1));;
   }
+}
+
+.profile-bio, .profile-left {
+  display: inline-block;
+}
 
 .profile-lower {
   display: flex;
@@ -196,5 +196,31 @@ form {
     margin: 0.5em 1em;
     white-space: normal;
     font-size: 0.9em;
+  }
+}
+
+.user-list {
+  white-space: nowrap;
+
+  .user-box {
+    width: 50%;
+    margin: 0.3em;
+    padding: 0.5em;
+    border: 1px solid darkblue;
+
+    .user-box-timestamp {
+      font-size: 0.8em;
+    }
+
+    .user-box-username {
+      font-weight: bold;
+    }
+
+    .user-box-img {
+      margin-top: 0.3em;
+      max-height: 3em;
+      max-width: 3em;
+      filter: drop-shadow(5px 7px 6px rgb(0 0 0 / 0.2));;
+    }
   }
 }

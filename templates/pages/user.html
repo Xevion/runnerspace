@@ -3,7 +3,7 @@
 {% block content %}
     <div class="content-inner">
         <div class="profile-title">
-            <span class="profile-username">{{ user.username }}</span>
+            <span class="profile-username">{{ user.name }}</span>
             {% with seen_text = user.get_last_seen() %}
                 {% if seen_text == 'Online now!' %}
                     <span class="profile-timestamp online">{{ seen_text }}</span>
@@ -17,8 +17,8 @@
                 <img class="profile-picture" src="{{ url_for('static', filename='default_photo.png') }}" alt="{{ user.username }}'s Profile Picture">
                 <div class="profile-details">
                     Registered {{ user.get_registration_delta() }} ago<br>
-                    67 likes<br>
-                    14 posts<br>
+                    0 likes<br>
+                    0 posts<br>
                 </div>
             </div>
             <div class="profile-bio">

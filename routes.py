@@ -18,7 +18,8 @@ def about():
 
 @blueprint.route('/users')
 def browse():
-    return render_template('pages/browse.html')
+    users = User.query.all()
+    return render_template('pages/browse.html', users=users)
 
 
 @blueprint.route('/feed')

@@ -136,10 +136,12 @@ form button {
   padding-left: 1em;
   font-size: 0.9em;
 }
-.profile-title .profile-timestamp.offline {
+
+.offline {
   color: dimgrey;
 }
-.profile-title .profile-timestamp.online {
+
+.online {
   color: #0C8C00;
   font-weight: 600;
 }
@@ -172,6 +174,28 @@ form button {
   margin: 0.5em 1em;
   white-space: normal;
   font-size: 0.9em;
+}
+
+.user-list {
+  white-space: nowrap;
+}
+.user-list .user-box {
+  width: 50%;
+  margin: 0.3em;
+  padding: 0.5em;
+  border: 1px solid darkblue;
+}
+.user-list .user-box .user-box-timestamp {
+  font-size: 0.8em;
+}
+.user-list .user-box .user-box-username {
+  font-weight: bold;
+}
+.user-list .user-box .user-box-img {
+  margin-top: 0.3em;
+  max-height: 3em;
+  max-width: 3em;
+  filter: drop-shadow(5px 7px 6px rgba(0, 0, 0, 0.2));
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -1,1 +1,25 @@
 {% extends 'layouts/index.html' %}
+
+{% block content %}
+    <div class="content-inner">
+        <div class="user-list">
+            {% for user in users %}
+                <div class="user-box">
+                    <span class="user-box-username">
+                        <a href="{{ url_for('main.user', username=user.username) }}">{{ user.name }}</a>
+                    </span>
+                    {% with seen_text = user.get_last_seen() %}
+                        {% if seen_text == 'Online now!' %}
+                            <span class="user-box-timestamp online">{{ seen_text }}</span>
+                        {% else %}
+                            <span class="user-box-timestamp offline">{{ seen_text }}</span>
+                        {% endif %}
+                    {% endwith %}
+                    <br>
+                    <img class="user-box-img" src="{{ url_for('static', filename='default_photo.png') }}"
+                         alt="{{ user.username }}'s Profile Picture">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
