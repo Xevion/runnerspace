@@ -1,0 +1,20 @@
+{% extends 'layouts/index.html' %}
+{% block content %}
+    <div class="post-box">
+        {{ post.text }}
+        <br>
+        <div class="post-author">
+            <em>Posted by <a href="{{ url_for('main.user', username=author.username) }}">{{ author.name }}</a></em> <span
+                title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>.
+        </div>
+        <div class="post-comments">
+            {% for comment, author in comments_and_authors %}
+                <div class="post-comment">
+
+                    <span class="comment-text">"{{ comment.text }}"</span> — <a class="comment-author"
+                                                                              href="{{ url_for('main.user', username=author.username) }}">{{ author.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

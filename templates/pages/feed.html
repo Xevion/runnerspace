@@ -1,5 +1,31 @@
 {% extends 'layouts/index.html' %}
 
 {% block content %}
+    {% if current_user.is_authenticated %}
+        <form method="POST" action="{{ url_for('forms.new_post') }}" class="profile-form">
+            <label>
+                <textarea type="text" name="text" placeholder="Write a post between 15 and 1000 characters. Express yourself."></textarea>
+            </label>
+            <button class="button">Create Post</button>
+        </form>
 
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+
+    {% for post, author in posts_and_authors %}
+        <div class="post-box">
+            {{ post.text }}
+            <div class="post-author no-border">
+                <em>Posted by <a href="{{ url_for('main.user', username=author.username) }}">{{ author.name }}</a></em> <span
+                    title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>. |
+                <a href="{{ url_for('main.view_post', post_id=post.id) }}"><span>{{ post.comments|length }} comments</span></a>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock content %}

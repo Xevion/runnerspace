@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
-from .models import User
+from .models import User, Post, Comment
 
 blueprint = Blueprint('main', __name__)
 
@@ -24,7 +24,17 @@ def browse():
 
 @blueprint.route('/feed')
 def feed():
-    return render_template('pages/feed.html')
+    posts = Post.query.all()
+    authors = [User.query.get_or_404(post.author) for post in posts]
+    return render_template('pages/feed.html', posts_and_authors=zip(posts, authors))
+
+
+@blueprint.route('/feed/<post_id>')
+def view_post(post_id: int):
+    post = Post.query.get_or_404(post_id)
+    comments = post.comments
+    comment_authors = [User.query.get_or_404(comment.author) for comment in comments]
+    return render_template('pages/post.html', post=post, author=User.query.get_or_404(post.author), comments_and_authors=zip(comments, comment_authors))
 
 
 @blueprint.route('/messages')

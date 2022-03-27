@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, request, url_for
 from flask_login import current_user, login_required
 
 from .create_app import db
-from .models import User
+from .models import User, Post, Comment
 
 blueprint = Blueprint('forms', __name__)
 
@@ -22,3 +22,22 @@ def edit_profile_post(username):
 
     flash('Successfully updated profile.')
     return redirect(url_for('main.edit_user', username=username))
+
+
+@blueprint.route('/feed/new', methods=['POST'])
+@login_required
+def new_post():
+    post_text = request.form.get('text')
+
+    if len(post_text) < 15:
+        flash('Must have at least 15 characters of text.')
+        return redirect(url_for('forms.new_post'))
+    elif len(post_text) > 1000:
+        flash('Cannot have more than 1000 characters of text.')
+        return redirect(url_for('forms.new_post'))
+
+    post = Post(author=current_user.id, text=post_text)
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect(url_for('main.view_post', post_id=post.id))

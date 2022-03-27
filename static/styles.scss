@@ -272,3 +272,43 @@ form {
     margin: 0.5em 0;
   }
 }
+
+.post-box {
+  border: 1px solid grey;
+  border-radius: 3px;
+  padding: 1.5em;
+  padding-bottom: 0.8em;
+    margin: 0.45em;
+
+  .post-author {
+    margin-top: 1em;
+    font-size: 0.8em;
+    border-bottom: 1px solid grey;
+    padding-bottom: 0.8em;
+
+    &.no-border {
+      border: none;
+      padding-bottom: 0;
+    }
+  }
+
+  .post-comments {
+    padding-left: 2em;
+    font-size: 0.8em;
+
+    .post-comment {
+      width: fit-content;
+      margin: 0.4em;
+      padding: 0.3em;
+      border: 1px solid rgba(128, 128, 128, 0.51);
+      border-radius: 3px;
+
+      .comment-author {
+        //margin-left: 1em;
+        font-size: 0.9em;
+        vertical-align: center;
+        text-decoration: none;
+      }
+    }
+  }
+}
