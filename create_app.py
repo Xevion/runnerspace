@@ -5,11 +5,13 @@ from flask_login import LoginManager
 # init SQLAlchemy
 db = SQLAlchemy()
 
+
 def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = 'secret key goes here'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
 
@@ -23,14 +25,16 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    # idk if i need the rest of this shit below
-
-    # blueprint for auth routes in app
-    from .auth import auth as auth_blueprint
+    from .auth import blueprint as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    # blueprint for non-auth parts of app
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
+    from .routes import blueprint as routes_blueprint
+    app.register_blueprint(routes_blueprint)
+
+    # CLI commands setup
+    @app.shell_context_processor
+    def shell_context():
+        """Provides specific Flask components to the shell."""
+        return {'app': app, 'db': db}
 
     return app

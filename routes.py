@@ -1,64 +1,65 @@
-from flask import Flask, render_template
+from flask import Blueprint, render_template
+from flask_login import login_required, current_user
 
-app = Flask(__name__)
-
-user = {
-    'username': 'Xevion',
-    'logged_in': False
-}
+blueprint = Blueprint('main', __name__)
 
 
-@app.route('/')
+@blueprint.route('/profile')
+@login_required
+def profile():
+    return render_template('layouts/profile.html', name=current_user.name)
+
+
+@blueprint.route('/')
 def index():  # put application's code here
     return render_template('layouts/index.html', user=user)
 
 
-@app.route('/about')
+@blueprint.route('/about')
 def about():
     return render_template('pages/about.html', user=user)
 
 
-@app.route('/users')
+@blueprint.route('/users')
 def browse():
     return render_template('pages/browse.html', user=user)
 
 
-@app.route('/feed')
+@blueprint.route('/feed')
 def feed():
     return render_template('pages/feed.html', user=user)
 
 
-@app.route('/messages')
+@blueprint.route('/messages')
 def messages():
     return render_template('pages/messages.html', user=user)
 
 
-@app.route('/search')
+@blueprint.route('/search')
 def search():
     return render_template('pages/search.html', user=user)
 
 
-@app.route('/user/<username>')
+@blueprint.route('/user/<username>')
 def user(username: str):
-    return render_template('pages/about.html', user=user)
+    return render_template('pages/user.html', user=user)
 
 
-@app.route('/blogs')
+@blueprint.route('/blogs')
 def blogs():
     return render_template('pages/blogs.html', user=user)
 
 
-@app.route('/groups')
+@blueprint.route('/groups')
 def groups():
     return render_template('pages/groups.html', user=user)
 
-@app.route('/login')
+
+@blueprint.route('/login', methods=['GET'])
 def login():
     return render_template('pages/login.html', user=user)
 
-@app.route('/signup')
+
+@blueprint.route('/signup', methods=['GET'])
 def signup():
     return render_template('pages/signup.html', user=user)
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
