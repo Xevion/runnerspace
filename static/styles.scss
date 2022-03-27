@@ -1,14 +1,28 @@
-body, html {
-  font-family: Arial, sans-serif;
-  margin: 0;
+@font-face {
+  font-family: "Arial Rounded MT Bold";
+  src: url("/static/arial_rounded_bold.ttf");
 }
 
-#content {
+body, html {
+  font-family: Verdana, Arial, sans-serif, Helvetica;
+  margin: 0;
+  background-color: #e7e7e7;
+  line-height: 1.225;
+}
+
+.content-outer {
   width: 900px;
   max-width: 100%;
   margin: 0 auto;
-  .content-inner {
-    margin: 2em;
+
+  .content {
+
+    .content-inner {
+      //min-height: 50vh;
+      padding: 2em;
+    }
+
+    background-color: white;
   }
 }
 
@@ -22,11 +36,15 @@ body, html {
 .header-primary {
   background-color: #1b53a8;
   padding: 10px;
+  position: relative;
 
   .header-login {
+    position: absolute;
+    top: 1em;
+    right: 1em;
     color: white;
 
-    .username {
+    a {
       text-decoration: underline;
       color: white !important;
     }
@@ -66,7 +84,6 @@ nav, footer {
 
       a {
         text-decoration: none;
-        color: white;
       }
     }
   }
