@@ -13,7 +13,7 @@ def edit_profile_post(username):
     user = db.session.query(User).filter_by(username=username).first_or_404()
 
     # Ignore non
-    if not user.is_admin and current_user.id != user.id:
+    if not current_user.is_admin and current_user.id != user.id:
         return redirect(url_for('main.user', username=username))
 
     user.about_me = request.form.get('about-me', user.about_me)

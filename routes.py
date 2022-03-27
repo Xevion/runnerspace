@@ -63,7 +63,7 @@ def user(username: str):
 @login_required
 def edit_user(username: str):
     user = User.query.filter_by(username=username).first_or_404()
-    if user.is_admin or current_user.id == user.id:
+    if current_user.is_admin or current_user.id == user.id:
         return render_template('pages/user_edit.html', user=user)
     return redirect(url_for('main.user', username=username))
 
