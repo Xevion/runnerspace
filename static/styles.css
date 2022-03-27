@@ -5,15 +5,20 @@
 body, html {
   font-family: Verdana, Arial, sans-serif, Helvetica;
   margin: 0;
+  background-color: #e7e7e7;
+  line-height: 1.225;
 }
 
-#content {
+.content-outer {
   width: 900px;
   max-width: 100%;
   margin: 0 auto;
 }
-#content .content-inner {
-  margin: 2em;
+.content-outer .content {
+  background-color: white;
+}
+.content-outer .content .content-inner {
+  padding: 2em;
 }
 
 #logo {
@@ -26,11 +31,15 @@ body, html {
 .header-primary {
   background-color: #1b53a8;
   padding: 10px;
+  position: relative;
 }
 .header-primary .header-login {
+  position: absolute;
+  top: 1em;
+  right: 1em;
   color: white;
 }
-.header-primary .header-login .username {
+.header-primary .header-login a {
   text-decoration: underline;
   color: white !important;
 }
@@ -45,6 +54,18 @@ body, html {
   margin: auto auto;
 }
 
+a {
+  color: #1E40AF;
+}
+
+nav a {
+  color: white;
+}
+
+footer a {
+  color: #1E40AF;
+}
+
 nav .links, footer .links {
   margin: 0;
   list-style: none;
@@ -54,7 +75,11 @@ nav .links li, footer .links li {
 }
 nav .links li a, footer .links li a {
   text-decoration: none;
-  color: white;
+}
+
+footer {
+  font-size: 60%;
+  text-align: center;
 }
 
 footer .links {
@@ -71,6 +96,31 @@ nav .links li.active a {
 nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after {
   content: " | ";
   color: black;
+}
+
+.form-subtext {
+  text-align: center;
+  font-size: 1em;
+}
+
+form {
+  margin: 0 auto;
+  width: fit-content;
+}
+form.login-form {
+  border: 1px solid darkblue;
+  padding: 10px;
+}
+form .field {
+  padding: 4px;
+}
+form .field .checkbox {
+  margin-left: auto;
+}
+form button {
+  border-radius: 0px;
+  width: 15em;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=styles.css.map */
