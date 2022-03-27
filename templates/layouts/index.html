@@ -1,12 +1,28 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    <h2>New Users</h2>
-    <div style="border: 1px solid grey; padding: 0.2em; width: fit-content; padding-right: 1.2em;">
-        <ul>
-            {% for new_user in new_users %}
-                <li><a href="{{ url_for('main.user', username=new_user.username) }}" style="text-decoration: none">{{ new_user.username }}</a> as of {{ new_user.get_registration_delta() }} ago</li>
-            {% endfor %}
-        </ul>
+    <div style="display: flex;">
+        <div class="new-users" style="margin: 2em;">
+            <h2>New Users</h2>
+            <div>
+                <ul>
+                    {% for new_user in new_users %}
+                        <li><a href="{{ url_for('main.user', username=new_user.username) }}">{{ new_user.username }}</a> as
+                            of {{ new_user.get_registration_delta() }} ago
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="statistics" style="margin: 1em;">
+            <h2>runnerspace Statistics</h2>
+            <div>
+                <div style="margin: 1.2em;">
+                    <strong>{{ stats['total_comments'] }}</strong> comments across <strong>{{ stats['total_posts'] }}</strong> posts<br>
+                    <strong>{{ stats['total_users'] }}</strong> users
+                </div>
+            </div>
+
+        </div>
     </div>
 {% endblock %}

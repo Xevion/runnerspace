@@ -9,7 +9,12 @@ blueprint = Blueprint('main', __name__)
 @blueprint.route('/')
 def index():  # put application's code here
     users = User.query.order_by(User.time_registered.desc()).limit(10).all()
-    return render_template('layouts/index.html', new_users=users)
+    stats = {
+        'total_users': User.query.count(),
+        'total_comments': Comment.query.count(),
+        'total_posts': Post.query.count()
+    }
+    return render_template('layouts/index.html', new_users=users, stats=stats)
 
 
 @blueprint.route('/about')

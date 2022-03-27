@@ -275,4 +275,19 @@ form button {
   text-decoration: none;
 }
 
+.new-users > div, .statistics > div {
+  border: 1px solid grey;
+  padding: 0.2em;
+  width: fit-content;
+  padding-right: 1.2em;
+}
+.new-users > div a, .statistics > div a {
+  text-decoration: none;
+}
+
+.statistics > div {
+  min-height: 235px;
+  margin: 1em;
+}
+
 /*# sourceMappingURL=styles.css.map */
