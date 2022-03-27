@@ -33,6 +33,8 @@ class User(UserMixin, db.Model):
         delta: datetime.timedelta = datetime.datetime.utcnow() - self.time_registered
         return humanize.naturaldelta(delta)
 
+    def get_post_count(self) -> int:
+        return len(self.posts)
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
