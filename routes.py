@@ -8,7 +8,7 @@ blueprint = Blueprint('main', __name__)
 
 @blueprint.route('/')
 def index():  # put application's code here
-    users = User.query.order_by(User.time_registered).limit(10).all()
+    users = User.query.order_by(User.time_registered.desc()).limit(10).all()
     return render_template('layouts/index.html', new_users=users)
 
 
