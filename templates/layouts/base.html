@@ -13,9 +13,11 @@
         <div class="content-outer">
             <div class="content">
                 {% include 'layouts/header.html' %}
-                {% block content %}
-                    Do not extend <strong>base.html</strong> directly.
-                {% endblock content %}
+                <div class="content-inner">
+                    {% block content %}
+                        Do not extend <strong>base.html</strong> directly.
+                    {% endblock content %}
+                </div>
             </div>
             {% include 'layouts/footer.html' %}
         </div>

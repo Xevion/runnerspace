@@ -1,6 +1,5 @@
 {% extends 'layouts/index.html' %}
 {% block content %}
-    <div class="content-inner">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="notification is-danger">
@@ -33,5 +32,4 @@
         <p class="form-subtext">
             Don't have a login? <a href="{{ url_for('main.signup') }}">Sign-up</a> instead!
         </p>
-    </div>
 {% endblock content %}
