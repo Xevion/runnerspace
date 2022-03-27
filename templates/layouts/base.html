@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Runnerspace</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+    <div id="content">
+        {% include 'layouts/header.html' %}
+        {% block content %}
+            Do not extend <strong>base.html</strong> directly.
+        {% endblock content %}
+        {% include 'layouts/footer.html' %}
+    </div>
+    </body>
+</html>
