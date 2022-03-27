@@ -84,13 +84,25 @@ def create_app():
         print(f'Committing {len(users)} users into DB.')
         db.session.commit()
 
+        all_users: List[User] = User.query.all()
+
         post_count: int = 0
-        for author in random.choices(User.query.all(), k=count // 4):
+        for author in random.choices(all_users, k=count // 2):
             new_post = Post(author=author.id, text=fake.paragraph(nb_sentences=2))
             db.session.add(new_post)
             post_count += 1
 
         print(f'Committing {post_count} posts into the DB.')
+        db.session.commit()
+
+        comment_count: int = 0
+        for post in Post.query.all():
+            for _ in range(random.randint(3, len(all_users) // 4)):
+                new_comment = Comment(text=fake.paragraph(nb_sentences=1), author=random.choice(all_users).id, post=post.id)
+                db.session.add(new_comment)
+                comment_count += 1
+
+        print(f'Committing {comment_count} comments into the DB.')
         db.session.commit()
 
     @app.cli.command("create_all")
