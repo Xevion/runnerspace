@@ -45,8 +45,8 @@ def user(username: str):
 
 @blueprint.route('/user/<username>/edit')
 @login_required
-def profile():
-    return render_template('layouts/user_edit.html')
+def edit_user(username: str):
+    return render_template('pages/user_edit.html')
 
 
 @blueprint.route('/blogs')
@@ -61,9 +61,9 @@ def groups():
 
 @blueprint.route('/login', methods=['GET'])
 def login():
-    return render_template('pages/login.html')
+    return render_template('pages/auth/login.html')
 
 
 @blueprint.route('/signup', methods=['GET'])
 def signup():
-    return render_template('pages/signup.html')
+    return render_template('pages/auth/signup.html')
