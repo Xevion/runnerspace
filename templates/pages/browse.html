@@ -2,7 +2,7 @@
 
 {% block content %}
         <div class="user-list">
-            {% for user_row in users|batch(2, '&nbsp;') %}
+            {% for user_row in users|batch(2) %}
                 <div class="user-list-row">
                     {% for user in user_row %}
                         <div class="user-box">
