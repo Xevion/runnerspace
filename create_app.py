@@ -1,3 +1,4 @@
+import random
 from datetime import datetime
 
 import click
@@ -67,8 +68,9 @@ def create_app():
     @click.argument("count")
     def create_fake_users(count: int):
         fake = Faker()
+        count = int(count)
         users = {}
-        for _ in range(int(count)):
+        for _ in range(count):
             profile: dict = fake.simple_profile()
             users[profile['username']] = profile
 
@@ -80,6 +82,15 @@ def create_app():
             db.session.add(new_user)
 
         print(f'Committing {len(users)} users into DB.')
+        db.session.commit()
+
+        post_count: int = 0
+        for author in random.choices(User.query.all(), k=count // 4):
+            new_post = Post(author=author.id, text=fake.paragraph(nb_sentences=2))
+            db.session.add(new_post)
+            post_count += 1
+
+        print(f'Committing {post_count} posts into the DB.')
         db.session.commit()
 
     @app.cli.command("create_all")
