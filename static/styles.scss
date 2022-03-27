@@ -16,6 +16,7 @@ body, html {
   color: #ef7900;
   font-size: 2.5em;
   letter-spacing: -2.8px;
+  font-family: "Arial Rounded MT Bold", sans-serif;
 }
 
 .header-primary {
@@ -43,6 +44,18 @@ body, html {
   }
 }
 
+a {
+  color: #1E40AF;
+}
+
+nav a {
+  color: white;
+}
+
+footer a {
+  color: #1E40AF;
+}
+
 nav, footer {
   .links {
     margin: 0;
@@ -57,6 +70,11 @@ nav, footer {
       }
     }
   }
+}
+
+footer {
+  font-size: 60%;
+  text-align: center;
 }
 
 footer .links {
@@ -74,5 +92,34 @@ nav, footer {
   .links li:not(:last-child)::after {
     content: " | ";
     color: black;
+  }
+}
+
+.form-subtext {
+  text-align: center;
+  font-size: 1em;
+}
+
+form {
+  margin: 0 auto;
+  width: fit-content;
+
+  &.login-form {
+    border: 1px solid darkblue;
+    padding: 10px
+  }
+
+  .field {
+    padding: 4px;
+
+    .checkbox {
+      margin-left: auto;
+    }
+  }
+
+  button {
+    border-radius: 0px;
+    width: 15em;
+    margin: 0 auto;
   }
 }
