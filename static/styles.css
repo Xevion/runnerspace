@@ -1,5 +1,9 @@
+@font-face {
+  font-family: "Arial Rounded MT Bold";
+  src: url("/static/arial_rounded_bold.ttf");
+}
 body, html {
-  font-family: Arial, sans-serif;
+  font-family: Verdana, Arial, sans-serif, Helvetica;
   margin: 0;
 }
 
@@ -16,6 +20,7 @@ body, html {
   color: #ef7900;
   font-size: 2.5em;
   letter-spacing: -2.8px;
+  font-family: "Arial Rounded MT Bold", sans-serif;
 }
 
 .header-primary {
