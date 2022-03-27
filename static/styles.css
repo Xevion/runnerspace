@@ -176,8 +176,9 @@ form button {
   font-size: 0.9em;
 }
 
-.user-list {
+.user-list .user-list-row {
   white-space: nowrap;
+  display: flex;
 }
 .user-list .user-box {
   width: 50%;

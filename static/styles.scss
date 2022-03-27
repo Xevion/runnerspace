@@ -200,7 +200,11 @@ form {
 }
 
 .user-list {
-  white-space: nowrap;
+
+  .user-list-row {
+    white-space: nowrap;
+    display: flex;
+  }
 
   .user-box {
     width: 50%;
