@@ -5,19 +5,26 @@
         <div class="user-list">
             {% for user in users %}
                 <div class="user-box">
+                    <div class="user-box-top">
+
                     <span class="user-box-username">
                         <a href="{{ url_for('main.user', username=user.username) }}">{{ user.name }}</a>
                     </span>
-                    {% with seen_text = user.get_last_seen() %}
-                        {% if seen_text == 'Online now!' %}
-                            <span class="user-box-timestamp online">{{ seen_text }}</span>
-                        {% else %}
-                            <span class="user-box-timestamp offline">{{ seen_text }}</span>
-                        {% endif %}
-                    {% endwith %}
-                    <br>
-                    <img class="user-box-img" src="{{ url_for('static', filename='default_photo.png') }}"
-                         alt="{{ user.username }}'s Profile Picture">
+                        {% with seen_text = user.get_last_seen() %}
+                            {% if seen_text == 'Online now!' %}
+                                <span class="user-box-timestamp online">{{ seen_text }}</span>
+                            {% else %}
+                                <span class="user-box-timestamp offline">{{ seen_text }}</span>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="user-box-bottom">
+                        <div class="user-box-img">
+                            <img src="{{ url_for('static', filename='default_photo.png') }}"
+                                 alt="{{ user.username }}'s Profile Picture">
+                        </div>
+                        <p class="user-box-minibio">{{ user.about_me }}</p>
+                    </div>
                 </div>
             {% endfor %}
         </div>

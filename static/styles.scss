@@ -207,6 +207,7 @@ form {
     margin: 0.3em;
     padding: 0.5em;
     border: 1px solid darkblue;
+    height: 6em;
 
     .user-box-timestamp {
       font-size: 0.8em;
@@ -216,11 +217,33 @@ form {
       font-weight: bold;
     }
 
+    .user-box-bottom {
+      height: 100%;
+      display: flex;
+
+      .user-box-minibio {
+        width: calc(100%);
+        margin: 0.4em;
+        margin-left: 0.6em;
+        display: -webkit-box;
+        line-height: 1.2em;
+        height: 3.6em;
+
+
+        -webkit-line-clamp: 3;
+        white-space: normal;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+      }
+    }
+
     .user-box-img {
-      margin-top: 0.3em;
-      max-height: 3em;
-      max-width: 3em;
-      filter: drop-shadow(5px 7px 6px rgb(0 0 0 / 0.2));;
+      img {
+        margin-top: 0.3em;
+        max-height: 3em;
+        max-width: 3em;
+        filter: drop-shadow(5px 7px 6px rgb(0 0 0 / 0.2));;
+      }
     }
   }
 }
