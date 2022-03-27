@@ -20,8 +20,8 @@ class User(UserMixin, db.Model):
     time_registered = db.Column(db.DateTime, nullable=False, server_default=func.now())
     last_seen = db.Column(db.DateTime, nullable=False, server_default=func.now())
     last_ip = db.Column(db.String(64), nullable=True)
-    posts = db.relationship("Post", backref='author')
-    comments = db.relationship("Comment", backref='author')
+    posts = db.relationship("Post")
+    comments = db.relationship("Comment")
 
     def get_last_seen(self) -> str:
         delta: datetime.timedelta = datetime.datetime.utcnow() - self.last_seen
@@ -41,7 +41,7 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, server_default=func.now())
     date_updated = db.Column(db.DateTime, nullable=True)
     likes = db.Column(db.Text, default='[]')
-    comments = db.relationship("Comment", backref='post')
+    comments = db.relationship("Comment")
 
     def get_likes(self) -> List[int]:
         """Return the IDs of the Users who have liked this post."""
@@ -58,9 +58,14 @@ class Post(db.Model):
             likes.append(user_id)
             self.set_likes(likes)
 
+    def get_time_ago(self) -> str:
+        delta: datetime.timedelta = datetime.datetime.utcnow() - self.date_posted
+        return humanize.naturaldelta(delta)
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
     author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    date_posted = db.Column(db.DateTime, server_default=func.now())
