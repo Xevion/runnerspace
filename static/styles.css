@@ -262,6 +262,13 @@ form button {
   border: 1px solid rgba(128, 128, 128, 0.51);
   border-radius: 3px;
 }
+.post-box .post-comments .post-comment.add-comment {
+  border: 0;
+}
+.post-box .post-comments .post-comment.add-comment button {
+  margin-left: 0.8em;
+  width: fit-content;
+}
 .post-box .post-comments .post-comment .comment-author {
   font-size: 0.9em;
   vertical-align: center;
