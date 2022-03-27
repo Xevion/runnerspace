@@ -7,6 +7,7 @@ from flask_login import UserMixin
 from sqlalchemy import func
 
 from .create_app import db
+
 MAXIMUM_ONLINE_DELTA = datetime.timedelta(minutes=5)
 
 
@@ -19,6 +20,8 @@ class User(UserMixin, db.Model):
     time_registered = db.Column(db.DateTime, nullable=False, server_default=func.now())
     last_seen = db.Column(db.DateTime, nullable=False, server_default=func.now())
     last_ip = db.Column(db.String(64), nullable=True)
+    posts = db.relationship("Post", backref='author')
+    comments = db.relationship("Comment", backref='author')
 
     def get_last_seen(self) -> str:
         delta: datetime.timedelta = datetime.datetime.utcnow() - self.last_seen
@@ -33,11 +36,12 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.Integer)
+    author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     text = db.Column(db.Text)
     date_posted = db.Column(db.DateTime, server_default=func.now())
     date_updated = db.Column(db.DateTime, nullable=True)
     likes = db.Column(db.Text, default='[]')
+    comments = db.relationship("Comment", backref='post')
 
     def get_likes(self) -> List[int]:
         """Return the IDs of the Users who have liked this post."""
@@ -53,3 +57,10 @@ class Post(db.Model):
         if user_id not in likes:
             likes.append(user_id)
             self.set_likes(likes)
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post = db.Column(db.Integer, db.ForeignKey('post.id'), nulllable=False)
