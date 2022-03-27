@@ -18,7 +18,7 @@
             <div class="profile-bio">
                 <p>
                     <strong>About me:</strong><br>
-                    This user hasn't written a bio yet.
+                    {{ user.about_me or "This user hasn't written a bio yet." }}
                 </p>
             </div>
         </div>
