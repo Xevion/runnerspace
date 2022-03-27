@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, redirect, request, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from .models import User
@@ -7,12 +7,12 @@ from .create_app import db
 
 blueprint = Blueprint('auth', __name__)
 
-'''
-FIXME this will have to be revisited later with added funcitonality,
-as right now `login`, `signup`, and `logout` only return text
 
-There will also be routes for handling POST requests from login and signup
-'''
+@blueprint.route('/user/<username>', methods=['POST'])
+def bio_post():
+    bio = request.form.get('bio')
+    setattr(current_user, 'bio', bio)
+    setattr(current_user, 'has_bio', True)
 
 
 @blueprint.route('/login', methods=['POST'])
