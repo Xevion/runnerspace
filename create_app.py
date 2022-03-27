@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
@@ -30,6 +30,11 @@ def create_app():
 
     from .routes import blueprint as routes_blueprint
     app.register_blueprint(routes_blueprint)
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        # note that we set the 404 status explicitly
+        return render_template('errors/404.html'), 404
 
     # CLI commands setup
     @app.shell_context_processor
