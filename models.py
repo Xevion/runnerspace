@@ -8,7 +8,7 @@ from sqlalchemy import func
 
 from .create_app import db
 
-MAXIMUM_ONLINE_DELTA = datetime.timedelta(minutes=5)
+MAXIMUM_ONLINE_DELTA = datetime.timedelta(minutes=1)
 
 
 class User(UserMixin, db.Model):
