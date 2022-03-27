@@ -252,3 +252,23 @@ form {
     }
   }
 }
+
+.profile-form {
+  margin: 0 auto;
+  width: 80%;
+
+  textarea {
+    margin: 0.5em auto;
+    height: 10em;
+    width: 100%;
+  }
+
+  button {
+    margin: 0.3em auto;
+    text-align: center;
+  }
+
+  label {
+    margin: 0.5em 0;
+  }
+}

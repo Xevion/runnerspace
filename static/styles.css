@@ -217,4 +217,21 @@ form button {
   filter: drop-shadow(5px 7px 6px rgba(0, 0, 0, 0.2));
 }
 
+.profile-form {
+  margin: 0 auto;
+  width: 80%;
+}
+.profile-form textarea {
+  margin: 0.5em auto;
+  height: 10em;
+  width: 100%;
+}
+.profile-form button {
+  margin: 0.3em auto;
+  text-align: center;
+}
+.profile-form label {
+  margin: 0.5em 0;
+}
+
 /*# sourceMappingURL=styles.css.map */
