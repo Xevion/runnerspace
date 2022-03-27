@@ -63,4 +63,4 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
     author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    post = db.Column(db.Integer, db.ForeignKey('post.id'), nulllable=False)
+    post = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)

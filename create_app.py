@@ -25,7 +25,7 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    from .models import User
+    from .models import User, Post, Comment
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -81,5 +81,9 @@ def create_app():
 
         print(f'Committing {len(users)} users into DB.')
         db.session.commit()
+
+    @app.cli.command("create_all")
+    def db_create_all() -> None:
+        db.create_all(app=app)
 
     return app
