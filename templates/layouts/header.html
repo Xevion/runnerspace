@@ -1,9 +1,12 @@
 <div class="header">
     <div class="header-primary">
-        <span id="logo">runnerspace</span>
+        <a id="logo" href="{{ url_for('main.index') }}">runnerspace</a>
         <div class="header-login">
             {% if current_user.is_authenticated %}
-            Logged in as <a href="{{ url_for('main.user', username=current_user.username) }}" class="username">{{ current_user.username }}</a> | <a href="{{ url_for('main.logout') }}">Logout</a>
+                Logged in as
+                <a href="{{ url_for('main.user', username=current_user.username) }}" class="username">{{ current_user.username }}</a>
+                <a href="{{ url_for('main.edit_user', username=current_user.username) }}"><i class="fas fa-cog fa-1x"></i></a>
+                | <a href="{{ url_for('auth.logout') }}">Logout</a>
             {% else %}
                 <a href="{{ url_for('main.login') }}">Login</a> or <a href="{{ url_for('main.signup') }}">Sign-up</a>!
             {% endif %}
