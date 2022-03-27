@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-from flask_login import login_required
+from flask import Blueprint, redirect, render_template, url_for
+from flask_login import current_user, login_required
 
 from .models import User
 
@@ -43,10 +43,13 @@ def user(username: str):
     return render_template('pages/user.html', user=user)
 
 
-@blueprint.route('/user/<username>/edit')
+@blueprint.route('/user/<username>/edit', methods=['GET'])
 @login_required
 def edit_user(username: str):
-    return render_template('pages/user_edit.html')
+    user = User.query.filter_by(username=username).first_or_404()
+    if current_user.id == user.id:
+        return render_template('pages/user_edit.html', user=user)
+    return redirect(url_for('main.user', username=username))
 
 
 @blueprint.route('/blogs')
