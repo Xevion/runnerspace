@@ -1,7 +1,13 @@
+import datetime
+import json
+from typing import List
+
+import humanize
 from flask_login import UserMixin
 from sqlalchemy import func
 
 from .create_app import db
+MAXIMUM_ONLINE_DELTA = datetime.timedelta(minutes=5)
 
 
 class User(UserMixin, db.Model):
@@ -14,6 +20,16 @@ class User(UserMixin, db.Model):
     last_seen = db.Column(db.DateTime, nullable=False, server_default=func.now())
     last_ip = db.Column(db.String(64), nullable=True)
 
+    def get_last_seen(self) -> str:
+        delta: datetime.timedelta = datetime.datetime.utcnow() - self.last_seen
+        if delta > MAXIMUM_ONLINE_DELTA:
+            return f'Last seen {humanize.naturaldelta(delta)} ago'
+        return 'Online now!'
+
+    def get_registration_delta(self) -> str:
+        delta: datetime.timedelta = datetime.datetime.utcnow() - self.time_registered
+        return humanize.naturaldelta(delta)
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,3 +38,18 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, server_default=func.now())
     date_updated = db.Column(db.DateTime, nullable=True)
     likes = db.Column(db.Text, default='[]')
+
+    def get_likes(self) -> List[int]:
+        """Return the IDs of the Users who have liked this post."""
+        return json.loads(self.likes)
+
+    def set_likes(self, likes: List[int]) -> None:
+        """Set the likes c"""
+        self.likes = list(dict.fromkeys(json.dumps(likes)))
+        self.save()
+
+    def add_like(self, user_id: int) -> None:
+        likes: List[int] = self.get_likes()
+        if user_id not in likes:
+            likes.append(user_id)
+            self.set_likes(likes)

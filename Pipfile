@@ -10,6 +10,7 @@ flask-login = "*"
 flask-sqlalchemy = "*"
 pytz = "*"
 faker = "*"
+humanize = "*"
 
 [dev-packages]
 
