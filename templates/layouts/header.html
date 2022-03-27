@@ -2,8 +2,8 @@
     <div class="header-primary">
         <span id="logo">runnerspace</span>
         <div class="header-login">
-            {% if logged_in %}
-            Logged in as <a href="/user/{{ user.username }}" class="username">{{ user.username }}</a>
+            {% if current_user.is_authenticated %}
+            Logged in as <a href="/user/{{ current_user.username }}" class="username">{{ current_user.username }}</a>
             {% else %}
                 <a href="/login">Login</a> or <a href="/signup">Sign-up</a>!
             {% endif %}
