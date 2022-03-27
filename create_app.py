@@ -37,6 +37,9 @@ def create_app():
     from .routes import blueprint as routes_blueprint
     app.register_blueprint(routes_blueprint)
 
+    from .forms import blueprint as forms_blueprint
+    app.register_blueprint(forms_blueprint)
+
     @app.errorhandler(404)
     def page_not_found(e):
         # note that we set the 404 status explicitly

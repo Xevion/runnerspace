@@ -1,5 +1,23 @@
 {% extends 'layouts/index.html' %}
 
 {% block content %}
-<h3>Edit Profile</h3>
+    <h3>Edit Profile</h3>
+    <form method="POST" action="{{ url_for('forms.edit_profile_post', username=user.username) }}" class="profile-form">
+        <label>
+            Name<br>
+            <input type="text" name="name" value="{{ user.name }}">
+        </label><br>
+        <label>
+            About Me
+            <textarea type="text" name="about-me">{{ user.about_me }}</textarea>
+        </label>
+        <button class="button">Save & Submit</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
 {% endblock %}
