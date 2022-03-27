@@ -1,6 +1,9 @@
 <div class="header">
     <div class="header-primary">
-        <a id="logo" href="{{ url_for('main.index') }}">runnerspace</a>
+        <a id="img-logo" href="{{ url_for('main.index') }}">
+            <img src="{{ url_for('static', filename='roadrunner_header.png') }}">
+        </a>
+        {#        <a id="text-logo" href="{{ url_for('main.index') }}">runnerspace</a>#}
         <div class="header-login">
             {% if current_user.is_authenticated %}
                 Logged in as
@@ -18,9 +21,9 @@
             <li><a href="{{ url_for('main.feed') }}">My Feed</a></li>
             <li><a href="{{ url_for('main.browse') }}">Browse</a></li>
             <li><a href="{{ url_for('main.search') }}">Search</a></li>
-{#            <li><a href="{{ url_for('main.messages') }}">My Messages</a></li>#}
-{#            <li><a href="{{ url_for('main.blogs') }}">Blog</a></li>#}
-{#            <li><a href="{{ url_for('main.groups') }}">Groups</a></li>#}
+            {#            <li><a href="{{ url_for('main.messages') }}">My Messages</a></li>#}
+            {#            <li><a href="{{ url_for('main.blogs') }}">Blog</a></li>#}
+            {#            <li><a href="{{ url_for('main.groups') }}">Groups</a></li>#}
             <li><a href="{{ url_for('main.about') }}">About</a></li>
         </ul>
     </nav>

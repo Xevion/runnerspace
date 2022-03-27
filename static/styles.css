@@ -21,18 +21,37 @@ body, html {
   padding: 2em;
 }
 
-#logo {
+#about .about-img {
+  float: left;
+  max-width: 15em;
+  max-height: 15em;
+  margin: 1em;
+  filter: drop-shadow(5px 7px 6px rgba(0, 0, 0, 0.1));
+}
+#about p {
+  text-align: justify;
+}
+
+.header-primary {
+  background-color: #1b53a8;
+  position: relative;
+  max-height: 100px;
+  padding: 10px 0;
+}
+.header-primary #text-logo {
   text-decoration: none;
   color: #ef7900;
   font-size: 2.5em;
   letter-spacing: -2.8px;
   font-family: "Arial Rounded MT Bold", sans-serif;
 }
-
-.header-primary {
-  background-color: #1b53a8;
-  padding: 10px;
-  position: relative;
+.header-primary #img-logo {
+  height: 100%;
+  box-sizing: border-box;
+}
+.header-primary #img-logo img {
+  max-width: 100%;
+  max-height: 80px;
 }
 .header-primary .header-login {
   position: absolute;
@@ -275,11 +294,14 @@ form button {
   text-decoration: none;
 }
 
+.new-users, .statistics {
+  margin-top: 0 !important;
+}
 .new-users > div, .statistics > div {
   border: 1px solid grey;
   padding: 0.2em;
   width: fit-content;
-  padding-right: 1.2em;
+  padding-right: 1.5em;
 }
 .new-users > div a, .statistics > div a {
   text-decoration: none;
