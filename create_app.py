@@ -1,8 +1,14 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from datetime import datetime
 
+import click
+import pytz
+from faker import Faker
+from flask import Flask, render_template, request
+from flask_login import LoginManager, current_user
+from flask_sqlalchemy import SQLAlchemy
 # init SQLAlchemy
+from werkzeug.security import generate_password_hash
+
 db = SQLAlchemy()
 
 
@@ -36,10 +42,36 @@ def create_app():
         # note that we set the 404 status explicitly
         return render_template('errors/404.html'), 404
 
+    @app.before_request
+    def update_last_seen():
+        if current_user.is_authenticated:
+            current_user.last_seen = datetime.now(tz=pytz.UTC)  # datetime.utcnow doesn't actually attach a timezone
+            current_user.last_ip = str(request.remote_addr)
+            db.session.add(current_user)
+            db.session.commit()
+
     # CLI commands setup
     @app.shell_context_processor
     def shell_context():
         """Provides specific Flask components to the shell."""
         return {'app': app, 'db': db}
+
+    @app.cli.command("fake")
+    @click.argument("count")
+    def create_fake_users(count: int):
+        fake = Faker()
+        users = {}
+        for _ in range(int(count)):
+            profile: dict = fake.simple_profile()
+            users[profile['username']] = profile
+
+        for profile in users.values():
+            new_user = User(username=profile['username'],
+                            name=profile['name'],
+                            password=generate_password_hash('password', method='sha256'))
+            db.session.add(new_user)
+
+        print(f'Committing {len(users)} users into DB.')
+        db.session.commit()
 
     return app

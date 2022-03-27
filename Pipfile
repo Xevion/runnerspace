@@ -8,6 +8,8 @@ python-dotenv = "*"
 flask = "*"
 flask-login = "*"
 flask-sqlalchemy = "*"
+pytz = "*"
+faker = "*"
 
 [dev-packages]
 
