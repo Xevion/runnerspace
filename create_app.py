@@ -50,6 +50,10 @@ def create_app():
             db.session.add(current_user)
             db.session.commit()
 
+    @app.context_processor
+    def inject():
+        return dict(now=datetime.utcnow)
+
     # CLI commands setup
     @app.shell_context_processor
     def shell_context():
