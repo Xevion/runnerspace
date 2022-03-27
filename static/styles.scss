@@ -1,0 +1,78 @@
+body, html {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+#content {
+  width: 900px;
+  max-width: 100%;
+  margin: 0 auto;
+  .content-inner {
+    margin: 2em;
+  }
+}
+
+#logo {
+  color: #ef7900;
+  font-size: 2.5em;
+  letter-spacing: -2.8px;
+}
+
+.header-primary {
+  background-color: #1b53a8;
+  padding: 10px;
+
+  .header-login {
+    color: white;
+
+    .username {
+      text-decoration: underline;
+      color: white !important;
+    }
+  }
+}
+
+.header-secondary {
+  background-color: #7ca6ef;
+  height: 30px;
+  text-align: center;
+  display: flex;
+
+  .links {
+    margin: auto auto;
+  }
+}
+
+nav, footer {
+  .links {
+    margin: 0;
+    list-style: none;
+
+    li {
+      display: inline-block;
+
+      a {
+        text-decoration: none;
+        color: white;
+      }
+    }
+  }
+}
+
+footer .links {
+  font-size: 0.875em;
+  margin: 16px 0 5px 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav .links li.active a {
+  font-weight: bold;
+}
+
+nav, footer {
+  .links li:not(:last-child)::after {
+    content: " | ";
+    color: black;
+  }
+}
