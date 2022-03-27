@@ -1,5 +1,12 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    <h4>New Users</h4>
+    <h2>New Users</h2>
+    <div style="border: 1px solid grey; padding: 0.2em; width: fit-content; padding-right: 1.2em;">
+        <ul>
+            {% for new_user in new_users %}
+                <li><a href="{{ url_for('main.user', username=new_user.username) }}" style="text-decoration: none">{{ new_user.username }}</a> as of {{ new_user.get_registration_delta() }} ago</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
