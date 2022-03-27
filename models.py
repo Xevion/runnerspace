@@ -20,6 +20,7 @@ class User(UserMixin, db.Model):
     time_registered = db.Column(db.DateTime, nullable=False, server_default=func.now())
     last_seen = db.Column(db.DateTime, nullable=False, server_default=func.now())
     last_ip = db.Column(db.String(64), nullable=True)
+    is_admin = db.Column(db.Boolean, default=False)
     posts = db.relationship("Post")
     comments = db.relationship("Comment")
 
