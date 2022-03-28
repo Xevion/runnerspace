@@ -9,6 +9,14 @@
         </div>
         <div class="post-comments">
             {% if current_user.is_authenticated %}
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <span class="error-message">
+                    {{ messages[0] }}
+                </span>
+                    {% endif %}
+                {% endwith %}
+
                 <div class="post-comment add-comment">
                     <form method="POST" action="{{ url_for('forms.add_comment', post_id=post.id) }}">
                         <label>

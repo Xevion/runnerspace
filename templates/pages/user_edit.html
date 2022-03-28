@@ -15,9 +15,9 @@
     </form>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="notification is-danger">
+            <span class="error-message">
                 {{ messages[0] }}
-            </div>
+            </span>
         {% endif %}
     {% endwith %}
 {% endblock %}

@@ -2,20 +2,20 @@
 
 {% block content %}
     {% if current_user.is_authenticated %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages or true %}
+                <span class="error-message center-message">
+                    {{ messages[0] }}
+                </span>
+            {% endif %}
+        {% endwith %}
+
         <form method="POST" action="{{ url_for('forms.new_post') }}" class="profile-form">
             <label>
                 <textarea type="text" name="text" placeholder="Write a post between 15 and 1000 characters. Express yourself."></textarea>
             </label>
             <button class="button">Create Post</button>
         </form>
-
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="notification is-danger">
-                    {{ messages[0] }}
-                </div>
-            {% endif %}
-        {% endwith %}
     {% endif %}
 
     {% for post, author in posts_and_authors %}

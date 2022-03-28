@@ -124,12 +124,12 @@ nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after 
 }
 
 form {
-  margin: 0 auto;
+  margin: 1em auto;
   width: fit-content;
 }
 form.login-form {
   border: 1px solid darkblue;
-  padding: 10px;
+  padding: 0.7em;
 }
 form .field {
   padding: 4px;
@@ -262,6 +262,7 @@ form button {
 }
 .post-box .post-author {
   margin-top: 1em;
+  margin-bottom: 0.5em;
   font-size: 0.8em;
   border-bottom: 1px solid grey;
   padding-bottom: 0.8em;
@@ -310,6 +311,16 @@ form button {
 .statistics > div {
   min-height: 235px;
   margin: 1em;
+}
+
+span.error-message {
+  margin: 0.5em;
+  border: 1px solid red;
+  padding: 0.3em;
+}
+span.error-message.center-message {
+  margin: 0 auto;
+  display: table;
 }
 
 /*# sourceMappingURL=styles.css.map */
