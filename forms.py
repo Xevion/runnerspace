@@ -1,10 +1,12 @@
 from flask import Blueprint, flash, redirect, request, url_for
 from flask_login import current_user, login_required
+from profanity_filter import ProfanityFilter
 
 from database import db
 from models import User, Post, Comment
 
 blueprint = Blueprint('forms', __name__)
+pf = ProfanityFilter()
 
 
 @blueprint.route('/user/<username>/edit', methods=['POST'])
@@ -36,6 +38,10 @@ def new_post():
         flash('Cannot have more than 1000 characters of text.')
         return redirect(url_for('main.feed'))
 
+    if not pf.is_clean(post_text):
+        flash('Sorry, profanity is not allowed on runnerspace.')
+        return redirect(url_for('main.feed'))
+
     post = Post(author=current_user.id, text=post_text)
     db.session.add(post)
     db.session.commit()
@@ -52,6 +58,13 @@ def add_comment(post_id: int):
 
     if len(comment_text) > 50:
         flash('Cannot have more than 50 characters of text.')
+        return redirect(url_for('main.view_post', post_id=post_id))
+    elif len(comment_text) < 5:
+        flash('Your comment must have at least 5 characters of text.')
+        return redirect(url_for('main.view_post', post_id=post_id))
+
+    if not pf.is_clean(comment_text):
+        flash('Sorry, profanity is not allowed on runnerspace.')
         return redirect(url_for('main.view_post', post_id=post_id))
 
     comment = Comment(post=post.id, author=current_user.id, text=comment_text)

@@ -14,6 +14,7 @@ faker = "*"
 humanize = "*"
 gunicorn = "*"
 psycopg2 = "*"
+profanity-filter = "*"
 
 [dev-packages]
 
