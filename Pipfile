@@ -12,6 +12,7 @@ flask-sqlalchemy = "*"
 pytz = "*"
 faker = "*"
 humanize = "*"
+gunicorn = "*"
 
 [dev-packages]
 
