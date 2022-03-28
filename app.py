@@ -8,7 +8,6 @@ from faker import Faker
 from flask import Flask, render_template, request
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
-# init SQLAlchemy
 from werkzeug.security import generate_password_hash
 
 db = SQLAlchemy()
@@ -23,6 +22,7 @@ def create_app():
         app.config['SECRET_KEY'] = 'secret key goes here'
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
+    # Heroku deployment
     if app.config['ENV'] == 'production':
         app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL').replace('postgres://', 'postgresql://', 1)

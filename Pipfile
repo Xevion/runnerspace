@@ -13,6 +13,7 @@ pytz = "*"
 faker = "*"
 humanize = "*"
 gunicorn = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
