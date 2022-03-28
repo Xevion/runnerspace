@@ -31,10 +31,10 @@ def new_post():
 
     if len(post_text) < 15:
         flash('Must have at least 15 characters of text.')
-        return redirect(url_for('forms.new_post'))
+        return redirect(url_for('main.feed'))
     elif len(post_text) > 1000:
         flash('Cannot have more than 1000 characters of text.')
-        return redirect(url_for('forms.new_post'))
+        return redirect(url_for('main.feed'))
 
     post = Post(author=current_user.id, text=post_text)
     db.session.add(post)
