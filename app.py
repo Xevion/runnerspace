@@ -120,6 +120,6 @@ def create_app():
 
 
 # Only used for Heroku; use 'flask run' or internal IDE configurations otherwise
+app = create_app()
 if __name__ == '__main__':
-    app = create_app()
     app.run()
