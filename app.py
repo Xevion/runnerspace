@@ -113,6 +113,10 @@ def create_app():
 
     @app.cli.command("create_all")
     def db_create_all() -> None:
+        with app.app_context():
+            db.create_all(app=app)
+
+    with app.app_context():
         db.create_all(app=app)
 
     return app
