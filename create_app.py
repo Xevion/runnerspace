@@ -1,3 +1,4 @@
+import os
 import random
 from datetime import datetime
 
@@ -16,9 +17,15 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
-    app.config['SECRET_KEY'] = 'secret key goes here'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    if app.config['ENV'] == 'development':
+        app.config['SECRET_KEY'] = 'secret key goes here'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+
+    if app.config['ENV'] == 'production':
+        app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 
     db.init_app(app)
 
@@ -110,3 +117,9 @@ def create_app():
         db.create_all(app=app)
 
     return app
+
+
+# Only used for Heroku; use 'flask run' or internal IDE configurations otherwise
+if __name__ == '__main__':
+    app = create_app()
+    app.run()
