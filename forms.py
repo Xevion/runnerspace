@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, redirect, request, url_for
 from flask_login import current_user, login_required
 
-from app import db
+from database import db
 from models import User, Post, Comment
 
 blueprint = Blueprint('forms', __name__)

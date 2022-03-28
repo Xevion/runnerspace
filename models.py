@@ -6,7 +6,7 @@ import humanize
 from flask_login import UserMixin
 from sqlalchemy import func
 
-from app import db
+from database import db
 
 MAXIMUM_ONLINE_DELTA = datetime.timedelta(minutes=1)
 

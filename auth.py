@@ -3,7 +3,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from models import User
-from app import db
+from database import db
 
 blueprint = Blueprint('auth', __name__)
 
