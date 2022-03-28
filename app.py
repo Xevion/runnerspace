@@ -25,7 +25,7 @@ def create_app():
 
     if app.config['ENV'] == 'production':
         app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL').replace('postgres://', 'postgresql://', 1)
 
     db.init_app(app)
 
