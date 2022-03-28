@@ -40,12 +40,13 @@ def view_post(post_id: int):
     post = Post.query.get_or_404(post_id)
     comments = post.comments
     comment_authors = [User.query.get_or_404(comment.author) for comment in comments]
-    return render_template('pages/post.html', post=post, author=User.query.get_or_404(post.author), comments_and_authors=zip(comments, comment_authors))
+    return render_template('pages/post.html', post=post, author=User.query.get_or_404(post.author),
+                           comments_and_authors=zip(comments, comment_authors))
 
 
-@blueprint.route('/messages')
-def messages():
-    return render_template('pages/messages.html')
+# @blueprint.route('/messages')
+# def messages():
+#     return render_template('pages/messages.html')
 
 
 @blueprint.route('/search')
@@ -68,15 +69,14 @@ def edit_user(username: str):
     return redirect(url_for('main.user', username=username))
 
 
-@blueprint.route('/blogs')
-def blogs():
-    return render_template('pages/blogs.html')
-
-
-@blueprint.route('/groups')
-def groups():
-    return render_template('pages/groups.html')
-
+# @blueprint.route('/blogs')
+# def blogs():
+#     return render_template('pages/blogs.html')
+#
+#
+# @blueprint.route('/groups')
+# def groups():
+#     return render_template('pages/groups.html')
 
 @blueprint.route('/login', methods=['GET'])
 def login():
