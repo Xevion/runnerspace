@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, render_template, url_for
 from flask_login import current_user, login_required
 
-from .models import User, Post, Comment
+from models import User, Post, Comment
 
 blueprint = Blueprint('main', __name__)
 
