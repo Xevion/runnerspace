@@ -14,7 +14,7 @@ pf = ProfanityFilter()
 def edit_profile_post(username):
     user = db.session.query(User).filter_by(username=username).first_or_404()
 
-    # Ignore non
+    # Allow admins to edit profiles, but deny other users
     if not current_user.is_admin and current_user.id != user.id:
         return redirect(url_for('main.user', username=username))
 
@@ -30,17 +30,6 @@ def edit_profile_post(username):
 @login_required
 def new_post():
     post_text = request.form.get('text')
-
-    if len(post_text) < 15:
-        flash('Must have at least 15 characters of text.')
-        return redirect(url_for('main.feed'))
-    elif len(post_text) > 1000:
-        flash('Cannot have more than 1000 characters of text.')
-        return redirect(url_for('main.feed'))
-
-    if not pf.is_clean(post_text):
-        flash('Sorry, profanity is not allowed on runnerspace.')
-        return redirect(url_for('main.feed'))
 
     post = Post(author=current_user.id, text=post_text)
     db.session.add(post)
