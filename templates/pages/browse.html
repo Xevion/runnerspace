@@ -24,7 +24,7 @@
                                     <img src="{{ url_for('static', filename='default_photo.png') }}"
                                          alt="{{ user.username }}'s Profile Picture">
                                 </div>
-                                <p class="user-box-minibio">{{ user.about_me }}</p>
+                                <p class="user-box-minibio">{{ user.display_about() }}</p>
                             </div>
                         </div>
                     {% endfor %}

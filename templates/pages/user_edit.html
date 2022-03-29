@@ -1,23 +1,12 @@
 {% extends 'layouts/index.html' %}
+{% from 'macros.html' import render_field %}
 
 {% block content %}
     <h3>Edit Profile</h3>
-    <form method="POST" action="{{ url_for('forms.edit_profile_post', username=user.username) }}" class="form">
-        <label>
-            Name<br>
-            <input type="text" name="name" value="{{ user.name }}">
-        </label><br>
-        <label>
-            About Me
-            <textarea type="text" name="about-me">{{ user.about_me }}</textarea>
-        </label>
-        <button class="button">Save & Submit</button>
+    <form method="POST" class="form">
+        {{ form.csrf_token }}
+        {{ render_field(form.name) }}
+        {{ render_field(form.about_me) }}
+        <input type="submit" value="Save & Submit">
     </form>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <span class="error-message">
-                {{ messages[0] }}
-            </span>
-        {% endif %}
-    {% endwith %}
 {% endblock %}

@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
 
 from models import User, Post, Comment
-from forms import NewPostForm
+from forms import NewPostForm, EditProfileForm
 from database import db
 
 blueprint = Blueprint('main', __name__)
@@ -71,13 +71,24 @@ def view_user(username: str):
     return render_template('pages/user.html', user=user)
 
 
-@blueprint.route('/user/<username>/edit', methods=['GET'])
+@blueprint.route('/user/<username>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_user(username: str):
-    user = User.query.filter_by(username=username).first_or_404()
-    if current_user.is_admin or current_user.id == user.id:
-        return render_template('pages/user_edit.html', user=user)
-    return redirect(url_for('main.view_user', username=username))
+    user = db.session.query(User).filter_by(username=username).first_or_404()
+    form = EditProfileForm(request.form)
+
+    if request.method == 'POST':
+        if form.validate():
+            if current_user.is_admin or current_user.id == user.id:
+                user.about_me = form.about_me.data
+                user.name = form.name.data
+
+                db.session.commit()
+                return redirect(url_for('main.view_user', username=username))
+        return render_template('pages/user_edit.html', form=form)
+
+    form.populate_obj(user)
+    return render_template('pages/user_edit.html', form=form)
 
 # @blueprint.route('/blogs')
 # def blogs():

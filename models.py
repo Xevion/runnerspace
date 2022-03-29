@@ -37,6 +37,9 @@ class User(UserMixin, db.Model):
     def get_post_count(self) -> int:
         return len(self.posts)
 
+    def display_about(self) -> str:
+        return self.about_me or "This user hasn't written a bio yet."
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
