@@ -22,7 +22,7 @@
                 <span title="{{ user.time_registered }}">Registered {{ user.get_registration_delta() }} ago</span><br>
                 {#                0 likes<br>#}
                 {% with post_count = user.get_post_count() %}
-                    {{ post_count }} post{{ post_count|pluralize() }}<br>
+                    {{ post_count }} post{{ post_count|pluralize }}<br>
                 {% endwith %}
             </div>
         </div>
