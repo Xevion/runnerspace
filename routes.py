@@ -90,6 +90,20 @@ def edit_user(username: str):
     form.populate_obj(user)
     return render_template('pages/user_edit.html', form=form)
 
+
+@blueprint.route('/terms_of_service')
+def tos():
+    return render_template('static/tos.html')
+
+
+@blueprint.route('/privacy')
+def privacy():
+    return render_template('static/privacy.html')
+
+
+@blueprint.route('/license')
+def license():
+    return render_template('static/license.html')
 # @blueprint.route('/blogs')
 # def blogs():
 #     return render_template('pages/blogs.html')
