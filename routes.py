@@ -68,7 +68,6 @@ def edit_user(username: str):
         return render_template('pages/user_edit.html', user=user)
     return redirect(url_for('main.view_user', username=username))
 
-
 # @blueprint.route('/blogs')
 # def blogs():
 #     return render_template('pages/blogs.html')
@@ -77,12 +76,3 @@ def edit_user(username: str):
 # @blueprint.route('/groups')
 # def groups():
 #     return render_template('pages/groups.html')
-
-@blueprint.route('/login', methods=['GET'])
-def login():
-    return render_template('pages/auth/login.html')
-
-
-@blueprint.route('/signup', methods=['GET'])
-def signup():
-    return render_template('pages/auth/signup.html')

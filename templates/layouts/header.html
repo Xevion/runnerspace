@@ -11,7 +11,7 @@
                 <a href="{{ url_for('main.edit_user', username=current_user.username) }}"><i class="fas fa-cog fa-1x"></i></a>
                 | <a href="{{ url_for('auth.logout') }}">Logout</a>
             {% else %}
-                <a href="{{ url_for('main.login') }}">Login</a> or <a href="{{ url_for('main.signup') }}">Sign-up</a>!
+                <a href="{{ url_for('auth.login') }}">Login</a> or <a href="{{ url_for('auth.signup') }}">Sign-up</a>!
             {% endif %}
         </div>
     </div>

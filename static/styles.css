@@ -131,10 +131,10 @@ form.login-form {
   border: 1px solid darkblue;
   padding: 0.7em;
 }
-form .field {
+form field {
   padding: 4px;
 }
-form .field .checkbox {
+form field .checkbox {
   margin-left: auto;
 }
 form button {

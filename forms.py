@@ -1,63 +1,31 @@
-from flask import Blueprint, flash, redirect, request, url_for
-from flask_login import current_user, login_required
-from profanity_filter import ProfanityFilter
-
-from database import db
-from models import User, Post, Comment
-
-blueprint = Blueprint('forms', __name__)
-pf = ProfanityFilter()
+from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 
-@blueprint.route('/user/<username>/edit', methods=['POST'])
-@login_required
-def edit_profile_post(username):
-    user = db.session.query(User).filter_by(username=username).first_or_404()
-
-    # Allow admins to edit profiles, but deny other users
-    if not current_user.is_admin and current_user.id != user.id:
-        return redirect(url_for('main.user', username=username))
-
-    user.about_me = request.form.get('about-me', user.about_me)
-    user.name = request.form.get('name', user.name)
-    db.session.commit()
-
-    flash('Successfully updated profile.')
-    return redirect(url_for('main.edit_user', username=username))
+class RegistrationForm(Form):
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    name = StringField('Name', [validators.Length(min=2, max=35)])
+    password = PasswordField('New Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password')
+    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
 
 
-@blueprint.route('/feed/new', methods=['POST'])
-@login_required
-def new_post():
-    post_text = request.form.get('text')
-
-    post = Post(author=current_user.id, text=post_text)
-    db.session.add(post)
-    db.session.commit()
-
-    return redirect(url_for('main.view_post', post_id=post.id))
+class LoginForm(Form):
+    username = StringField('Username', [validators.DataRequired()])
+    password = StringField('Password', [validators.DataRequired()])
+    remember_me = BooleanField('Remember Me', [validators.Optional()])
 
 
-@blueprint.route('/feed/<post_id>/comment', methods=['POST'])
-@login_required
-def add_comment(post_id: int):
-    post = Post.query.get_or_404(post_id)
+class EditProfileForm(Form):
+    name = RegistrationForm.name
+    about_me = StringField('About Me', [validators.Optional()])
 
-    comment_text: str = request.form.get('comment-text')
 
-    if len(comment_text) > 50:
-        flash('Cannot have more than 50 characters of text.')
-        return redirect(url_for('main.view_post', post_id=post_id))
-    elif len(comment_text) < 5:
-        flash('Your comment must have at least 5 characters of text.')
-        return redirect(url_for('main.view_post', post_id=post_id))
+class NewPostForm(Form):
+    text = StringField('Text', [validators.Length(min=15, max=1000)])
 
-    if not pf.is_clean(comment_text):
-        flash('Sorry, profanity is not allowed on runnerspace.')
-        return redirect(url_for('main.view_post', post_id=post_id))
 
-    comment = Comment(post=post.id, author=current_user.id, text=comment_text)
-    db.session.add(comment)
-    db.session.commit()
-
-    return redirect(url_for('main.view_post', post_id=post.id))
+class NewCommentForm(Form):
+    text = StringField('Text', [validators.Length(min=5, max=50)])

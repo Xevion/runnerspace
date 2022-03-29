@@ -44,7 +44,7 @@ def create_app():
     from routes import blueprint as routes_blueprint
     app.register_blueprint(routes_blueprint)
 
-    from forms import blueprint as forms_blueprint
+    from route_forms import blueprint as forms_blueprint
     app.register_blueprint(forms_blueprint)
 
     @app.errorhandler(404)
