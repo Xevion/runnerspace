@@ -1,22 +1,15 @@
 {% extends 'layouts/index.html' %}
+{% from 'macros.html' import render_field %}
 
 {% block content %}
     {% if current_user.is_authenticated %}
-        {% with messages = get_flashed_messages() %}
-            {% if messages or true %}
-                <span class="error-message center-message">
-                    {{ messages[0] }}
-                </span>
-            {% endif %}
-        {% endwith %}
-
-        <form method="POST" action="{{ url_for('forms.new_post') }}" class="profile-form">
-            <label>
-                <textarea type="text" name="text" placeholder="Write a post between 15 and 1000 characters. Express yourself."></textarea>
-            </label>
-            <button class="button">Create Post</button>
+        <form method="POST" class="form post-form">
+            {{ render_field(form.text, show_label=False) }}
+            <input type=submit value="Create Post">
         </form>
     {% endif %}
+
+    <hr style="margin: 2em 0">
 
     {% for post, author in posts_and_authors %}
         <div class="post-box">

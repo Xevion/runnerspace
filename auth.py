@@ -34,8 +34,8 @@ def login():
             flash('Please check your login details and try again.')
             return redirect(url_for('auth.login'))
 
-        login_user(user, remember=form.remember.data)
-        return redirect(url_for('auth.index'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('main.index'))
 
     return render_template('pages/auth/login.html', form=form)
 

@@ -216,20 +216,24 @@ nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after 
   filter: drop-shadow(5px 7px 6px rgba(0, 0, 0, 0.2));
 }
 
-.profile-form {
+.form {
   margin: 0 auto;
   width: 80%;
 }
-.profile-form textarea {
+.form textarea {
   margin: 0.5em auto;
   height: 10em;
   width: 100%;
+  resize: vertical;
 }
-.profile-form button {
+.form.post-form {
+  border: none;
+}
+.form button {
   margin: 0.3em auto;
   text-align: center;
 }
-.profile-form label {
+.form label {
   margin: 0.5em 0;
 }
 

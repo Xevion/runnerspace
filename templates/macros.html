@@ -1,6 +1,8 @@
-{% macro render_field(field) %}
-    {{ field.label }}
-    {{ field(**kwargs)|safe }}
+{% macro render_field(field, show_label=True) %}
+    {% if show_label %}
+        {{ field.label }}
+    {% endif %}
+    {{ field(placeholder=field.description, **kwargs)|safe }}
     {% if field.errors %}
         <ul class=errors>
             {% for error in field.errors %}

@@ -256,7 +256,7 @@ nav, footer {
   }
 }
 
-.profile-form {
+.form {
   margin: 0 auto;
   width: 80%;
 
@@ -264,6 +264,11 @@ nav, footer {
     margin: 0.5em auto;
     height: 10em;
     width: 100%;
+    resize: vertical;
+  }
+
+  &.post-form {
+    border: none;
   }
 
   button {
@@ -374,6 +379,7 @@ form {
     &[type="submit"] {
       width: 100%;
     }
+
     //background: #ecf0f1;
     border: #ccc 1px solid;
     border-bottom: #ccc 2px solid;

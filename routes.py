@@ -1,7 +1,9 @@
-from flask import Blueprint, redirect, render_template, url_for
+from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
 
 from models import User, Post, Comment
+from forms import NewPostForm
+from database import db
 
 blueprint = Blueprint('main', __name__)
 
@@ -28,11 +30,20 @@ def browse():
     return render_template('pages/browse.html', users=users)
 
 
-@blueprint.route('/feed')
+@blueprint.route('/feed', methods=['GET', 'POST'])
 def feed():
     posts = Post.query.all()
     authors = [User.query.get_or_404(post.author) for post in posts]
-    return render_template('pages/feed.html', posts_and_authors=zip(posts, authors))
+    form = NewPostForm(request.form)
+
+    if request.method == 'POST' and form.validate():
+        post = Post(author=current_user.id, text=form.text.data)
+        db.session.add(post)
+        db.session.commit()
+
+        return redirect(url_for('main.view_post', post_id=post.id))
+
+    return render_template('pages/feed.html', posts_and_authors=zip(posts, authors), form=form)
 
 
 @blueprint.route('/feed/<post_id>')

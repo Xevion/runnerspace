@@ -28,21 +28,6 @@ def edit_profile_post(username):
         return redirect(url_for('main.edit_user', username=username))
 
 
-@blueprint.route('/feed/new', methods=['POST'])
-@login_required
-def new_post():
-    form = NewPostForm(request.form)
-
-    if form.validate():
-        post = Post(author=current_user.id, text=form.text.data)
-        db.session.add(post)
-        db.session.commit()
-
-        return redirect(url_for('main.view_post', post_id=post.id))
-    else:
-        redirect(url_for('main.feed'))
-
-
 @blueprint.route('/feed/<post_id>/comment', methods=['POST'])
 @login_required
 def add_comment(post_id: int):

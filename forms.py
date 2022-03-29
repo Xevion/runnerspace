@@ -1,4 +1,4 @@
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from wtforms import Form, BooleanField, StringField, PasswordField, TextAreaField, validators
 
 from validators import NoProfanity
 
@@ -22,11 +22,11 @@ class LoginForm(Form):
 
 class EditProfileForm(Form):
     name = RegistrationForm.name
-    about_me = StringField('About Me', [validators.Optional(), NoProfanity()])
+    about_me = StringField('About Me', [validators.Optional(), NoProfanity()], description='Tell us about yourself',)
 
 
 class NewPostForm(Form):
-    text = StringField('Text', [validators.Length(min=15, max=1000), NoProfanity()])
+    text = TextAreaField('Text', [validators.Length(min=15, max=1000), NoProfanity()], description='Express yourself.')
 
 
 class NewCommentForm(Form):

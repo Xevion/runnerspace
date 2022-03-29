@@ -2,7 +2,7 @@
 
 {% block content %}
     <h3>Edit Profile</h3>
-    <form method="POST" action="{{ url_for('forms.edit_profile_post', username=user.username) }}" class="profile-form">
+    <form method="POST" action="{{ url_for('forms.edit_profile_post', username=user.username) }}" class="form">
         <label>
             Name<br>
             <input type="text" name="name" value="{{ user.name }}">
