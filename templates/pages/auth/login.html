@@ -13,8 +13,7 @@
         {{ render_field(form.username) }}
         {{ render_field(form.password) }}
         {{ render_field(form.remember_me) }}
-            <p><input type=submit value=Login>
-
+        <input type=submit value=Login>
     </form>
     <p class="form-subtext">
         Don't have a login? <a href="{{ url_for('auth.signup') }}">Sign-up</a> instead!
