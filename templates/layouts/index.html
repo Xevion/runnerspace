@@ -7,7 +7,7 @@
             <div>
                 <ul>
                     {% for new_user in new_users %}
-                        <li><a href="{{ url_for('main.user', username=new_user.username) }}">{{ new_user.username }}</a> as
+                        <li><a href="{{ url_for('main.view_user', username=new_user.username) }}">{{ new_user.username }}</a> as
                             of {{ new_user.get_registration_delta() }} ago
                         </li>
                     {% endfor %}

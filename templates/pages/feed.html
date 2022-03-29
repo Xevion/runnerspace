@@ -22,7 +22,7 @@
         <div class="post-box">
             {{ post.text }}
             <div class="post-author no-border">
-                <em>Posted by <a href="{{ url_for('main.user', username=author.username) }}">{{ author.name }}</a></em> <span
+                <em>Posted by <a href="{{ url_for('main.view_user', username=author.username) }}">{{ author.name }}</a></em> <span
                     title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>. |
                 <a href="{{ url_for('main.view_post', post_id=post.id) }}"><span>{{ post.comments|length }} comments</span></a>
             </div>

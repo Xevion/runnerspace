@@ -9,7 +9,7 @@
                             <div class="user-box-top">
 
                     <span class="user-box-username">
-                        <a href="{{ url_for('main.user', username=user.username) }}">{{ user.name }}</a>
+                        <a href="{{ url_for('main.view_user', username=user.username) }}">{{ user.name }}</a>
                     </span>
                                 {% with seen_text = user.get_last_seen() %}
                                     {% if seen_text == 'Online now!' %}

@@ -2,6 +2,7 @@ from flask import Blueprint, flash, redirect, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from forms import LoginForm, RegistrationForm, EditProfileForm
 from models import User
 from database import db
 
@@ -9,43 +10,44 @@ blueprint = Blueprint('auth', __name__)
 
 
 @blueprint.route('/user/<username>', methods=['POST'])
-def bio_post():
-    bio = request.form.get('bio')
-    setattr(current_user, 'bio', bio)
-    setattr(current_user, 'has_bio', True)
+def edit_profile_post(username: str):
+    form = EditProfileForm(request.form)
+    user = User.query.filter_by(username=username).first_or_404()
+
+    if current_user.is_admin or user.id == current_user.id
+        if form.validate():
+            user.about_me = form.about_me.data
+            db.session.commit()
+
+    return redirect(url_for('main.view_user', username=user.username))
 
 
 @blueprint.route('/login', methods=['POST'])
 def login_post():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    remember = bool(request.form.get('remember'))
-
-    user = User.query.filter_by(username=username).first()
+    form = LoginForm(request.form)
+    user = User.query.filter_by(username=form.data.username).first()
 
     # check if the user actually exists, and compare password given
-    if not user or not check_password_hash(user.password, password):
+    if not user or not check_password_hash(user.password, form.password.data):
         flash('Please check your login details and try again.')
         return redirect(url_for('main.login'))
 
-    login_user(user, remember=remember)
+    login_user(user, remember=form.remember.data)
     return redirect(url_for('main.index'))
 
 
 @blueprint.route('/signup', methods=['POST'])
 def signup_post():
     # validate and add user to db
-    username = request.form.get('username')
-    name = request.form.get('name')
-    password = request.form.get('password')
+    form = RegistrationForm(request.form)
 
-    user = User.query.filter_by(username=username).first()  # Check if the email exists
+    user = User.query.filter_by(username=form.username.data).first()  # Check if the username is already in use
     if user:  # redirect back to sign-up page
-        flash('Email address already exists')
+        flash('This username is already in use.')
         return redirect(url_for('main.signup'))
 
     # Create new user with form data
-    new_user = User(username=username, name=name, password=generate_password_hash(password, method='sha256'))
+    new_user = User(username=form.username.data, name=form.name.data, password=generate_password_hash(form.password.data, method='sha256'))
 
     # Add new user to db
     db.session.add(new_user)

@@ -55,7 +55,7 @@ def search():
 
 
 @blueprint.route('/user/<username>/')
-def user(username: str):
+def view_user(username: str):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('pages/user.html', user=user)
 
@@ -66,7 +66,7 @@ def edit_user(username: str):
     user = User.query.filter_by(username=username).first_or_404()
     if current_user.is_admin or current_user.id == user.id:
         return render_template('pages/user_edit.html', user=user)
-    return redirect(url_for('main.user', username=username))
+    return redirect(url_for('main.view_user', username=username))
 
 
 # @blueprint.route('/blogs')
