@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
 
 from models import User, Post, Comment
-from forms import NewPostForm, EditProfileForm
+from forms import NewPostForm, NewCommentForm, EditProfileForm
 from database import db
 
 blueprint = Blueprint('main', __name__)
@@ -32,27 +32,23 @@ def browse():
 
 @blueprint.route('/feed', methods=['GET', 'POST'])
 def feed():
-    posts = Post.query.all()
-    authors = [User.query.get_or_404(post.author) for post in posts]
+    posts = Post.query.order_by(Post.date_posted.desc()).all()
     form = NewPostForm(request.form)
 
     if request.method == 'POST' and form.validate():
-        post = Post(author=current_user.id, text=form.text.data)
+        post = Post(author=current_user, text=form.text.data)
         db.session.add(post)
         db.session.commit()
 
         return redirect(url_for('main.view_post', post_id=post.id))
 
-    return render_template('pages/feed.html', posts_and_authors=zip(posts, authors), form=form)
+    return render_template('pages/feed.html', posts=posts, form=form)
 
 
 @blueprint.route('/feed/<post_id>')
 def view_post(post_id: int):
     post = Post.query.get_or_404(post_id)
-    comments = post.comments
-    comment_authors = [User.query.get_or_404(comment.author) for comment in comments]
-    return render_template('pages/post.html', post=post, author=User.query.get_or_404(post.author),
-                           comments_and_authors=zip(comments, comment_authors))
+    return render_template('pages/post.html', form=NewCommentForm(), post=post)
 
 
 # @blueprint.route('/messages')
@@ -79,7 +75,7 @@ def edit_user(username: str):
 
     if request.method == 'POST':
         if form.validate():
-            if current_user.is_admin or current_user.id == user.id:
+            if current_user.is_admin or current_user == user:
                 user.about_me = form.about_me.data
                 user.name = form.name.data
 

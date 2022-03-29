@@ -21,8 +21,8 @@ class User(UserMixin, db.Model):
     last_seen = db.Column(db.DateTime, nullable=False, server_default=func.now())
     last_ip = db.Column(db.String(64), nullable=True)
     is_admin = db.Column(db.Boolean, default=False)
-    posts = db.relationship("Post")
-    comments = db.relationship("Comment")
+    posts = db.relationship("Post", backref='author')
+    comments = db.relationship("Comment", backref='author')
 
     def get_last_seen(self) -> str:
         delta: datetime.timedelta = datetime.datetime.utcnow() - self.last_seen
@@ -40,14 +40,15 @@ class User(UserMixin, db.Model):
     def display_about(self) -> str:
         return self.about_me or "This user hasn't written a bio yet."
 
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     text = db.Column(db.Text)
     date_posted = db.Column(db.DateTime, server_default=func.now())
     date_updated = db.Column(db.DateTime, nullable=True)
     likes = db.Column(db.Text, default='[]')
-    comments = db.relationship("Comment")
+    comments = db.relationship("Comment", backref='post')
 
     def get_likes(self) -> List[int]:
         """Return the IDs of the Users who have liked this post."""
@@ -72,6 +73,6 @@ class Post(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
-    author = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    post = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     date_posted = db.Column(db.DateTime, server_default=func.now())

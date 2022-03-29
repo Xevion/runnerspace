@@ -109,7 +109,7 @@ def create_app():
 
         post_count: int = 0
         for author in random.choices(all_users, k=count // 2):
-            new_post = Post(author=author.id, text=fake.paragraph(nb_sentences=2))
+            new_post = Post(author=author, text=fake.paragraph(nb_sentences=2))
             db.session.add(new_post)
             post_count += 1
 
@@ -119,7 +119,7 @@ def create_app():
         comment_count: int = 0
         for post in Post.query.all():
             for _ in range(random.randint(3, len(all_users) // 4)):
-                new_comment = Comment(text=fake.paragraph(nb_sentences=1), author=random.choice(all_users).id, post=post.id)
+                new_comment = Comment(text=fake.paragraph(nb_sentences=1), author=random.choice(all_users), post=post)
                 db.session.add(new_comment)
                 comment_count += 1
 

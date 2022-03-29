@@ -4,6 +4,7 @@
 {% block content %}
     {% if current_user.is_authenticated %}
         <form method="POST" class="form post-form">
+            {{ form.csrf_token }}
             {{ render_field(form.text, show_label=False) }}
             <input type=submit value="Create Post">
         </form>
@@ -11,13 +12,15 @@
 
     <hr style="margin: 2em 0">
 
-    {% for post, author in posts_and_authors %}
+    {% for post in posts %}
         <div class="post-box">
             {{ post.text }}
             <div class="post-author no-border">
-                <em>Posted by <a href="{{ url_for('main.view_user', username=author.username) }}">{{ author.name }}</a></em> <span
-                    title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>. |
-                <a href="{{ url_for('main.view_post', post_id=post.id) }}"><span>{{ post.comments|length }} comments</span></a>
+                {% with comment_count = post.comments|length %}
+                    <em>Posted by <a href="{{ url_for('main.view_user', username=post.author.username) }}">{{ post.author.name }}</a></em>
+                    <span title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>. |
+                    <a href="{{ url_for('main.view_post', post_id=post.id) }}"><span> {{ comment_count }} comment{{ comment_count|pluralize }}</span></a>
+                {% endwith %}
             </div>
         </div>
     {% endfor %}

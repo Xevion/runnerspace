@@ -3,7 +3,7 @@
 {% block content %}
     <div class="profile-title">
         <span class="profile-username">{{ user.name }}</span>
-        {% if current_user.is_admin or current_user.id == user.id %}
+        {% if current_user.is_admin or current_user == user %}
             <a href="{{ url_for('main.edit_user', username=current_user.username) }}"><i class="fas fa-pencil-alt fa-sm" style="padding-bottom: 3px; padding-left: 0.5em;"></i></a>
         {% endif %}
         {% with seen_text = user.get_last_seen() %}
@@ -22,7 +22,7 @@
                 <span title="{{ user.time_registered }}">Registered {{ user.get_registration_delta() }} ago</span><br>
                 {#                0 likes<br>#}
                 {% with post_count = user.get_post_count() %}
-                    {{ post_count }} post{% if post_count > 1 %}s{% endif %}<br>
+                    {{ post_count }} post{{ post_count|pluralize() }}<br>
                 {% endwith %}
             </div>
         </div>

@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, request, url_for
+from flask import Blueprint, flash, redirect, request, url_for, render_template
 from flask_login import current_user, login_required
 from profanity_filter import ProfanityFilter
 from forms import RegistrationForm, EditProfileForm, NewPostForm, NewCommentForm
@@ -15,7 +15,7 @@ def edit_profile_post(username):
     user = db.session.query(User).filter_by(username=username).first_or_404()
 
     # Allow admins to edit profiles, but deny other users
-    if not current_user.is_admin and current_user.id != user.id:
+    if not current_user.is_admin and current_user != user:
         return redirect(url_for('main.view_user', username=username))
 
     form = RegistrationForm(request.form)
@@ -34,13 +34,11 @@ def add_comment(post_id: int):
     post = Post.query.get_or_404(post_id)
     form = NewCommentForm(request.form)
 
-    if form.validate():
-        if not pf.is_clean(form.text.data):
-            flash('Sorry, profanity is not allowed on runnerspace.')
-            return redirect(url_for('main.view_post', post_id=post_id))
-
-        comment = Comment(post=post.id, author=current_user.id, text=form.text.data)
+    if form.validate_on_submit():
+        comment = Comment(post=post, author=current_user, text=form.text.data)
         db.session.add(comment)
         db.session.commit()
 
-    return redirect(url_for('main.view_post', post_id=post.id))
+        return redirect(url_for('main.view_post', post_id=post.id))
+
+    return render_template('pages/post.html', form=form, post=post)

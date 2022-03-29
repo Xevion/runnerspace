@@ -14,7 +14,7 @@ def edit_profile_post(username: str):
     form = EditProfileForm(request.form)
     user = User.query.filter_by(username=username).first_or_404()
 
-    if current_user.is_admin or user.id == current_user.id:
+    if current_user.is_admin or user == current_user:
         if form.validate():
             user.about_me = form.about_me.data
             db.session.commit()
@@ -24,6 +24,9 @@ def edit_profile_post(username: str):
 
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+
     form = LoginForm(request.form)
 
     if request.method == 'POST' and form.validate():
@@ -44,7 +47,9 @@ def login():
 
 @blueprint.route('/signup', methods=['GET', 'POST'])
 def signup():
-    # validate and add user to db
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+
     form = RegistrationForm(request.form)
 
     if request.method == 'POST' and form.validate():
