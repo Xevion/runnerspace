@@ -6,10 +6,13 @@ import click
 import pytz
 from faker import Faker
 from flask import Flask, render_template, request
+from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 from database import db
+
+csrf = CSRFProtect()
 
 
 def create_app():
@@ -27,6 +30,7 @@ def create_app():
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', '').replace('postgres://', 'postgresql://', 1)
 
     db.init_app(app)
+    csrf.init_app(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -51,6 +55,10 @@ def create_app():
     def page_not_found(e):
         # note that we set the 404 status explicitly
         return render_template('errors/404.html'), 404
+
+    @app.errorhandler(CSRFError)
+    def handle_csrf_error(e):
+        return render_template('errprs/csrf.html', reason=e.description), 400
 
     @app.before_request
     def update_last_seen():
