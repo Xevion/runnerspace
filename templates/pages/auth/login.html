@@ -10,6 +10,7 @@
         {% endif %}
     {% endwith %}
     <form method="POST" action="{{ url_for('auth.login') }}" class="login-form">
+        {{ form.csrf_token }}
         {{ render_field(form.username) }}
         {{ render_field(form.password) }}
         {{ render_field(form.remember_me) }}

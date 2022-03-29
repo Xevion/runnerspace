@@ -3,13 +3,12 @@
 
 {% block content %}
     <form method=post class="login-form">
-        <dl>
-            {{ render_field(form.username) }}
-            {{ render_field(form.name) }}
-            {{ render_field(form.password) }}
-            {{ render_field(form.confirm) }}
-            {{ render_field(form.accept_tos) }}
-        </dl>
+        {{ form.csrf_token }}
+        {{ render_field(form.username) }}
+        {{ render_field(form.name) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.confirm) }}
+        {{ render_field(form.accept_tos) }}
         <input type=submit value=Register>
     </form>
 
