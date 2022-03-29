@@ -58,7 +58,7 @@ def create_app():
 
     @app.errorhandler(CSRFError)
     def handle_csrf_error(e):
-        return render_template('errprs/csrf.html', reason=e.description), 400
+        return render_template('errors/csrf.html', reason=e.description), 400
 
     @app.before_request
     def update_last_seen():
@@ -67,6 +67,13 @@ def create_app():
             current_user.last_ip = str(request.remote_addr)
             db.session.add(current_user)
             db.session.commit()
+
+    @app.template_filter('pluralize')
+    def pluralize(number, singular='', plural='s'):
+        if number == 1:
+            return singular
+        else:
+            return plural
 
     @app.context_processor
     def inject():

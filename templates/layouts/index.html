@@ -16,19 +16,22 @@
         </div>
         <div class="statistics" style="margin: 1em;">
             <h2>runnerspace Statistics</h2>
-            <div>
+            {% with comments = stats['total_comments'], posts = stats['total_posts'], users = stats['total_users'] %}
                 <div>
-                    <ul>
-                        <li>
-                            <strong>{{ stats['total_comments'] }}</strong> comments across <strong>{{ stats['total_posts'] }}</strong> posts<br>
-                        </li>
-                        <li>
-                            <strong>{{ stats['total_users'] }}</strong> users
-                        </li>
-                    </ul>
+                    <div>
+                        <ul>
+                            <li>
+                                <strong>{{ comments }}</strong> comment across <strong>{{ posts }}</strong>
+                                post{{ posts|pluralize }}<br>
+                            </li>
+                            <li>
+                                <strong>{{ users }}</strong> user{{ users|pluralize }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
+            {% endwith %}
         </div>
     </div>
 {% endblock %}
