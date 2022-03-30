@@ -6,7 +6,10 @@ from validators import NoProfanity
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [validators.Length(min=4, max=25),
-                                        validators.Regexp(r' ^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$'),
+                                        validators.Regexp(r'^[a-zA-Z0-9_\.]+$',
+                                                          message='Only letters, numbers, underscore character and dots are allowed.'),
+                                        validators.Regexp(r'^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$',
+                                                          message='Dots and underscores cannot be at the start of the username, repeat or touch.'),
                                         NoProfanity()])
     name = StringField('Name', [validators.Length(min=2, max=35), NoProfanity()])
     password = PasswordField('New Password', [
