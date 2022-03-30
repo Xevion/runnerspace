@@ -16,7 +16,9 @@
 
     {% for post in posts %}
         <div id="post-{{ post.id }}" class="post-box">
-            <i class="fas fa-heart {% if current_user.has_liked_post(post.id) %}liked{% endif %}" onclick="like({{ post.id }})"></i>
+            {% if current_user.is_authenticated %}
+                <i class="fas fa-heart {% if current_user.has_liked_post(post.id) %}liked{% endif %}" onclick="like({{ post.id }})"></i>
+            {% endif %}
             {{ post.text }}
             <div class="post-author no-border">
                 {% with comment_count = post.comments|length %}

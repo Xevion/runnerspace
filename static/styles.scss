@@ -304,6 +304,7 @@ nav, footer {
     right: 1em;
     color: #b0c9f3;
     cursor: pointer;
+
     &.liked {
       color: #1b53a8;
     }
@@ -382,6 +383,7 @@ nav, footer {
 .index-flex {
   display: flex;
   justify-content: space-around;
+
   .new-users, .statistics {
     margin-top: 0 !important;
 
@@ -403,15 +405,10 @@ nav, footer {
   }
 }
 
-span.error-message {
-  margin: 0.5em;
+.errors > li {
+  //margin: 0.5em;
   border: 1px solid red;
   padding: 0.3em;
-
-  &.center-message {
-    margin: 0 auto;
-    display: table;
-  }
 }
 
 form {

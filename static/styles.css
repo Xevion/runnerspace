@@ -341,14 +341,9 @@ nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after 
   margin: 1em;
 }
 
-span.error-message {
-  margin: 0.5em;
+.errors > li {
   border: 1px solid red;
   padding: 0.3em;
-}
-span.error-message.center-message {
-  margin: 0 auto;
-  display: table;
 }
 
 form {
