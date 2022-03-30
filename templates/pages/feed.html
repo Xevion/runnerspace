@@ -10,9 +10,13 @@
             {{ render_field(form.text, show_label=False) }}
             <input type=submit value="Create Post">
         </form>
+
+        <hr style="margin: 1.5em 0">
     {% endif %}
 
-    <hr style="margin: 1.5em 0">
+    {% with post_count = posts|length %}
+        <span style="display: inline-block; text-align: center; margin: 0.3em; margin-left: 1em;">Showing {{ post_count }} post{{ post_count|pluralize }}.</span>
+    {% endwith %}
 
     {% for post in posts %}
         <div id="post-{{ post.id }}" class="post-box">
