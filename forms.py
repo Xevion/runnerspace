@@ -31,4 +31,4 @@ class NewPostForm(FlaskForm):
 
 
 class NewCommentForm(FlaskForm):
-    text = StringField('Text', [validators.Length(min=5, max=50), NoProfanity()])
+    text = StringField('Text', [validators.Length(min=1, max=50), NoProfanity()])
