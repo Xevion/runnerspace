@@ -53,11 +53,11 @@ class User(UserMixin, db.Model):
 
     def get_post_count(self) -> int:
         """Returns the number of posts this user has made."""
-        return Post.query.filter_by(user_id=self.id).count()
+        return Post.query.filter_by(author=self).count()
 
     def get_comment_count(self) -> int:
         """Returns the number of comments this user has made."""
-        return Comment.query.filter_by(user_id=self.id).count()
+        return Comment.query.filter_by(author=self).count()
 
     def get_post_likes(self) -> int:
         """Returns the number of likes this user's posts have accumulated."""

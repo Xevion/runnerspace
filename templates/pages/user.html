@@ -4,7 +4,8 @@
     <div class="profile-title">
         <span class="profile-username">{{ user.name }}</span>
         {% if current_user.is_admin or current_user == user %}
-            <a href="{{ url_for('main.edit_user', username=current_user.username) }}"><i class="fas fa-pencil-alt fa-sm" style="padding-bottom: 3px; padding-left: 0.5em;"></i></a>
+            <a href="{{ url_for('main.edit_user', username=current_user.username) }}"><i class="fas fa-pencil-alt fa-sm"
+                                                                                         style="padding-bottom: 3px; padding-left: 0.5em;"></i></a>
         {% endif %}
         {% with seen_text = user.get_last_seen_text() %}
             {% if seen_text == 'Online now!' %}
@@ -20,7 +21,9 @@
                  alt="{{ user.username }}'s Profile Picture">
             <div class="profile-details">
                 <span title="{{ user.time_registered }}">Registered {{ user.get_registration_delta() }} ago</span><br>
-                {#                0 likes<br>#}
+                {% with like_count = user.get_post_likes() %}
+                    {{ like_count }} like{{ like_count|pluralize }}<br>
+                {% endwith %}
                 {% with post_count = user.get_post_count() %}
                     {{ post_count }} post{{ post_count|pluralize }}<br>
                 {% endwith %}
