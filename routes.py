@@ -73,17 +73,18 @@ def edit_user(username: str):
     user = db.session.query(User).filter_by(username=username).first_or_404()
     form = EditProfileForm(request.form)
 
-    if request.method == 'POST':
-        if form.validate():
-            if current_user.is_admin or current_user == user:
-                user.about_me = form.about_me.data
-                user.name = form.name.data
+    # Check that a form was submitted
+    if form.validate_on_submit():
+        # Check that the user submitting the form is allowed to do this
+        if current_user.is_admin or current_user == user:
+            user.about_me = form.about_me.data
+            user.name = form.name.data
 
-                db.session.commit()
-                return redirect(url_for('main.view_user', username=username))
+            db.session.commit()
+            return redirect(url_for('main.view_user', username=username))
         return render_template('pages/user_edit.html', form=form)
 
-    form.populate_obj(user)
+    form.process(obj=user)
     return render_template('pages/user_edit.html', form=form)
 
 
