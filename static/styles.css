@@ -229,6 +229,13 @@ nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after 
 .form.post-form {
   border: none;
 }
+.form.edit-profile-form {
+  white-space: normal;
+}
+.form.edit-profile-form label {
+  min-width: 5em;
+  font-weight: 600;
+}
 .form button {
   margin: 0.3em auto;
   text-align: center;
@@ -268,6 +275,29 @@ nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after 
 }
 .post-box .post-comments .post-comment.add-comment {
   border: 0;
+}
+.post-box .post-comments .post-comment.add-comment form {
+  border: 0;
+  padding: 0;
+}
+.post-box .post-comments .post-comment.add-comment form input {
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 3px;
+  border: #ccc 1px solid;
+  line-height: 1.3;
+}
+.post-box .post-comments .post-comment.add-comment form input[type=submit] {
+  width: auto;
+  border-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.post-box .post-comments .post-comment.add-comment form input[type=text] {
+  width: 13em;
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .post-box .post-comments .post-comment.add-comment button {
   margin-left: 0.8em;

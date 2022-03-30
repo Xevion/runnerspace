@@ -3,7 +3,7 @@
 
 {% block content %}
     <h3>Edit Profile</h3>
-    <form method="POST" class="form">
+    <form method="POST" class="form edit-profile-form">
         {{ form.csrf_token }}
         {{ render_field(form.name) }}
         {{ render_field(form.about_me) }}

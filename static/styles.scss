@@ -271,6 +271,15 @@ nav, footer {
     border: none;
   }
 
+  &.edit-profile-form {
+    white-space: normal;
+
+    label {
+      min-width: 5em;
+      font-weight: 600;
+    }
+  }
+
   button {
     margin: 0.3em auto;
     text-align: center;
@@ -314,6 +323,33 @@ nav, footer {
 
       &.add-comment {
         border: 0;
+
+        form {
+          border: 0;
+          padding: 0;
+
+          input {
+            font-size: 0.8rem;
+            margin: 0;
+            padding: 3px;
+            border: #ccc 1px solid;;
+            line-height: 1.3;
+
+            &[type=submit] {
+              width: auto;
+              border-left: 0;
+              border-top-left-radius: 0;
+              border-bottom-left-radius: 0;
+            }
+
+            &[type=text] {
+              width: 13em;
+              border-right: 0;
+              border-top-right-radius: 0;
+              border-bottom-right-radius: 0;
+            }
+          }
+        }
 
         button {
           margin-left: 0.8em;

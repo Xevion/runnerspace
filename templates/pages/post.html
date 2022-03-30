@@ -12,8 +12,7 @@
                 <div class="post-comment add-comment">
                     <form method="POST" action="{{ url_for('forms.add_comment', post_id=post.id) }}">
                         {{ form.csrf_token }}
-                        {{ form.text }}
-                        <input type=submit value="Add Comment">
+                        {{ form.text }}<input type=submit value="Add Comment">
                     </form>
                 </div>
             {% endif %}
