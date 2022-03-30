@@ -1,7 +1,7 @@
-from flask import Blueprint, redirect, render_template, url_for, request
+from flask import Blueprint, redirect, render_template, url_for, request, jsonify
 from flask_login import current_user, login_required
 
-from models import User, Post, Comment
+from models import User, Post, Comment, PostLike, CommentLike
 from forms import NewPostForm, NewCommentForm, EditProfileForm
 from database import db
 
@@ -44,6 +44,27 @@ def feed():
 def view_post(post_id: int):
     post = Post.query.get_or_404(post_id)
     return render_template('pages/post.html', form=NewCommentForm(), post=post)
+
+
+@blueprint.route('/post/<post_id>/like', methods=['POST'])
+@login_required
+def like_post(post_id: int):
+    # Check that the relevant post exists
+    post = db.session.query(Post).get_or_404(post_id)
+
+    # Acquire the relevant PostLike in question
+    post_like = db.session.query(PostLike).filter_by(post=post, user=current_user).first()
+    if post_like is None:
+        post_like = PostLike(post=post, user=current_user)
+        db.session.add(post_like)
+    else:
+        db.session.delete(post_like)
+        post_like = None
+
+    db.session.commit()
+
+    # post_like is only NOT None if the user had not liked it before, but has liked it now after db.commit().
+    return jsonify({'liked': post_like is not None, 'status_text': post.get_like_text()})
 
 
 @blueprint.route('/search')

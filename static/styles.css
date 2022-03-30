@@ -257,6 +257,7 @@ nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after 
   top: 1em;
   right: 1em;
   color: #b0c9f3;
+  cursor: pointer;
 }
 .post-box .fa-heart.liked {
   color: #1b53a8;
