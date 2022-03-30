@@ -101,17 +101,19 @@ class Post(db.Model):
 
     def get_like_text(self) -> str:
         like_count = self.get_like_count()
-        top_likes = PostLike.query.filter_by(post_id=self.id).order_by(PostLike.timestamp.asc()).limit(3)
+        top_likes = PostLike.query.filter_by(post_id=self.id).order_by(PostLike.timestamp.asc()).limit(2)
         users = [like.user for like in top_likes]
-        names = [f'<a href="{user.get_url()}">{user.name}</a>' for user in users]
+        names = [f'<a href="{user.get_url()}">{user.username}</a>' for user in users]
 
-        if like_count >= 3: format_string = '{0}, {1} and {2} has liked this post.'
+        if like_count >= 3: format_string = '{0}, {1} and {other_text} have liked this post.'
         elif like_count == 2: format_string = '{0} and {1} has liked this post.'
         elif like_count == 1: format_string = '{0} has liked this post.'
         else: format_string = '0 likes'
 
+        others: int = like_count - top_likes.count()
+        if others > 0:
+            return format_string.format(*names, other_text=f'{others} other{"s" if others != 1 else ""}')
         return format_string.format(*names)
-
 
 class PostLike(db.Model):
     id = db.Column(db.Integer, primary_key=True)
