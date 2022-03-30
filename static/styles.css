@@ -250,6 +250,16 @@ nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after 
   padding: 1.5em;
   padding-bottom: 0.8em;
   margin: 0.45em;
+  position: relative;
+}
+.post-box .fa-heart {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  color: #b0c9f3;
+}
+.post-box .fa-heart.liked {
+  color: #1b53a8;
 }
 .post-box .post-author {
   margin-top: 1em;

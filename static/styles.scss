@@ -296,6 +296,17 @@ nav, footer {
   padding: 1.5em;
   padding-bottom: 0.8em;
   margin: 0.45em;
+  position: relative;
+
+  .fa-heart {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    color: #b0c9f3;
+    &.liked {
+      color: #1b53a8;
+    }
+  }
 
   .post-author {
     margin-top: 1em;

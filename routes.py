@@ -40,15 +40,10 @@ def feed():
     return render_template('pages/feed.html', posts=posts, form=form)
 
 
-@blueprint.route('/feed/<post_id>')
+@blueprint.route('/post/<post_id>')
 def view_post(post_id: int):
     post = Post.query.get_or_404(post_id)
     return render_template('pages/post.html', form=NewCommentForm(), post=post)
-
-
-# @blueprint.route('/messages')
-# def messages():
-#     return render_template('pages/messages.html')
 
 
 @blueprint.route('/search')
@@ -81,12 +76,3 @@ def edit_user(username: str):
 
     form.process(obj=user)
     return render_template('pages/user_edit.html', form=form)
-
-# @blueprint.route('/blogs')
-# def blogs():
-#     return render_template('pages/blogs.html')
-#
-#
-# @blueprint.route('/groups')
-# def groups():
-#     return render_template('pages/groups.html')

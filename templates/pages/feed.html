@@ -10,16 +10,18 @@
         </form>
     {% endif %}
 
-    <hr style="margin: 2em 0">
+    <hr style="margin: 1.5em 0">
 
     {% for post in posts %}
         <div class="post-box">
+            <i class="fas fa-heart {% if current_user.has_liked_post(post.id) %}liked{% endif %}"></i>
             {{ post.text }}
             <div class="post-author no-border">
                 {% with comment_count = post.comments|length %}
                     <em>Posted by <a href="{{ url_for('main.view_user', username=post.author.username) }}">{{ post.author.name }}</a></em>
                     <span title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>. |
                     <a href="{{ url_for('main.view_post', post_id=post.id) }}"><span> {{ comment_count }} comment{{ comment_count|pluralize }}</span></a>
+                    | {{ post.get_like_text()|safe }}
                 {% endwith %}
             </div>
         </div>
