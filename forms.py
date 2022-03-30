@@ -5,7 +5,9 @@ from validators import NoProfanity
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', [validators.Length(min=4, max=25), NoProfanity()])
+    username = StringField('Username', [validators.Length(min=4, max=25),
+                                        validators.Regexp(r' ^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$'),
+                                        NoProfanity()])
     name = StringField('Name', [validators.Length(min=2, max=35), NoProfanity()])
     password = PasswordField('New Password', [
         validators.DataRequired(),
@@ -23,7 +25,7 @@ class LoginForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     name = RegistrationForm.name
-    about_me = TextAreaField('About Me', [validators.Optional(), NoProfanity()], description='Tell us about yourself',)
+    about_me = TextAreaField('About Me', [validators.Optional(), NoProfanity()], description='Tell us about yourself', )
 
 
 class NewPostForm(FlaskForm):
