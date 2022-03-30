@@ -1,8 +1,6 @@
 from typing import Optional
-from profanity_filter import ProfanityFilter
 from wtforms.validators import ValidationError
-
-pf = ProfanityFilter()
+from better_profanity import profanity
 
 
 class NoProfanity(object):
@@ -12,5 +10,5 @@ class NoProfanity(object):
         self.message = message
 
     def __call__(self, form, field):
-        if pf.is_profane(field.data):
+        if profanity.contains_profanity(field.data):
             raise ValidationError(self.message)
