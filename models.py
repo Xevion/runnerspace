@@ -47,23 +47,7 @@ class Post(db.Model):
     text = db.Column(db.Text)
     date_posted = db.Column(db.DateTime, server_default=func.now())
     date_updated = db.Column(db.DateTime, nullable=True)
-    likes = db.Column(db.Text, default='[]')
     comments = db.relationship("Comment", backref='post')
-
-    def get_likes(self) -> List[int]:
-        """Return the IDs of the Users who have liked this post."""
-        return json.loads(self.likes)
-
-    def set_likes(self, likes: List[int]) -> None:
-        """Set the likes c"""
-        self.likes = list(dict.fromkeys(json.dumps(likes)))
-        self.save()
-
-    def add_like(self, user_id: int) -> None:
-        likes: List[int] = self.get_likes()
-        if user_id not in likes:
-            likes.append(user_id)
-            self.set_likes(likes)
 
     def get_time_ago(self) -> str:
         delta: datetime.timedelta = datetime.datetime.utcnow() - self.date_posted
