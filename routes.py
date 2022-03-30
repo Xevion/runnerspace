@@ -19,11 +19,6 @@ def index():  # put application's code here
     return render_template('layouts/index.html', new_users=users, stats=stats)
 
 
-@blueprint.route('/about')
-def about():
-    return render_template('pages/about.html')
-
-
 @blueprint.route('/users')
 def browse():
     users = User.query.all()
@@ -87,20 +82,6 @@ def edit_user(username: str):
     form.process(obj=user)
     return render_template('pages/user_edit.html', form=form)
 
-
-@blueprint.route('/terms_of_service')
-def tos():
-    return render_template('static/tos.html')
-
-
-@blueprint.route('/privacy')
-def privacy():
-    return render_template('static/privacy.html')
-
-
-@blueprint.route('/license')
-def license():
-    return render_template('static/license.html')
 # @blueprint.route('/blogs')
 # def blogs():
 #     return render_template('pages/blogs.html')
