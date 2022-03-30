@@ -1,61 +1,39 @@
-from flask import Blueprint, flash, redirect, request, url_for
-from flask_login import current_user, login_required
+from flask_wtf import FlaskForm
+from wtforms import BooleanField, StringField, PasswordField, TextAreaField, validators
 
-from database import db
-from models import User, Post, Comment
-
-blueprint = Blueprint('forms', __name__)
+from validators import NoProfanity
 
 
-@blueprint.route('/user/<username>/edit', methods=['POST'])
-@login_required
-def edit_profile_post(username):
-    user = db.session.query(User).filter_by(username=username).first_or_404()
-
-    # Ignore non
-    if not current_user.is_admin and current_user.id != user.id:
-        return redirect(url_for('main.user', username=username))
-
-    user.about_me = request.form.get('about-me', user.about_me)
-    user.name = request.form.get('name', user.name)
-    db.session.commit()
-
-    flash('Successfully updated profile.')
-    return redirect(url_for('main.edit_user', username=username))
-
-
-@blueprint.route('/feed/new', methods=['POST'])
-@login_required
-def new_post():
-    post_text = request.form.get('text')
-
-    if len(post_text) < 15:
-        flash('Must have at least 15 characters of text.')
-        return redirect(url_for('forms.new_post'))
-    elif len(post_text) > 1000:
-        flash('Cannot have more than 1000 characters of text.')
-        return redirect(url_for('forms.new_post'))
-
-    post = Post(author=current_user.id, text=post_text)
-    db.session.add(post)
-    db.session.commit()
-
-    return redirect(url_for('main.view_post', post_id=post.id))
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', [validators.Length(min=4, max=25),
+                                        validators.Regexp(r'^[a-zA-Z0-9_\.]+$',
+                                                          message='Only letters, numbers, underscore character and dots are allowed.'),
+                                        validators.Regexp(r'^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$',
+                                                          message='Dots and underscores cannot be at the start of the username, repeat or touch.'),
+                                        NoProfanity()])
+    name = StringField('Name', [validators.Length(min=2, max=35), NoProfanity()])
+    password = PasswordField('New Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password')
+    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
 
 
-@blueprint.route('/feed/<post_id>/comment', methods=['POST'])
-@login_required
-def add_comment(post_id: int):
-    post = Post.query.get_or_404(post_id)
+class LoginForm(FlaskForm):
+    username = StringField('Username', [validators.DataRequired()])
+    password = StringField('Password', [validators.DataRequired()])
+    remember_me = BooleanField('Remember Me', [validators.Optional()])
 
-    comment_text: str = request.form.get('comment-text')
 
-    if len(comment_text) > 50:
-        flash('Cannot have more than 50 characters of text.')
-        return redirect(url_for('main.view_post', post_id=post_id))
+class EditProfileForm(FlaskForm):
+    name = RegistrationForm.name
+    about_me = TextAreaField('About Me', [validators.Optional(), NoProfanity()], description='Tell us about yourself', )
 
-    comment = Comment(post=post.id, author=current_user.id, text=comment_text)
-    db.session.add(comment)
-    db.session.commit()
 
-    return redirect(url_for('main.view_post', post_id=post.id))
+class NewPostForm(FlaskForm):
+    text = TextAreaField('Text', [validators.Length(min=15, max=1000), NoProfanity()], description='Express yourself.')
+
+
+class NewCommentForm(FlaskForm):
+    text = StringField('Text', [validators.Length(min=1, max=50), NoProfanity()])

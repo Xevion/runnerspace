@@ -4,25 +4,24 @@
         {{ post.text }}
         <br>
         <div class="post-author">
-            <em>Posted by <a href="{{ url_for('main.user', username=author.username) }}">{{ author.name }}</a></em> <span
+            <em>Posted by <a href="{{ url_for('main.view_user', username=post.author.username) }}">{{ post.author.name }}</a></em> <span
                 title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>.
         </div>
         <div class="post-comments">
             {% if current_user.is_authenticated %}
                 <div class="post-comment add-comment">
                     <form method="POST" action="{{ url_for('forms.add_comment', post_id=post.id) }}">
-                        <label>
-                            <input type="text" name="comment-text">
-                        </label>
-                        <button>Add Comment</button>
+                        {{ form.csrf_token }}
+                        {{ form.text }}<input type=submit value="Add Comment">
                     </form>
                 </div>
             {% endif %}
-            {% for comment, author in comments_and_authors %}
+            {% for comment in post.comments %}
                 <div class="post-comment">
-
-                    <span class="comment-text">"{{ comment.text }}"</span> — <a class="comment-author"
-                                                                                href="{{ url_for('main.user', username=author.username) }}">{{ author.name }}</a>
+                    <span class="comment-text">"{{ comment.text }}"</span> —
+                    <a class="comment-author"
+                       href="{{ url_for('main.view_user', username=comment.author) }}">{{ comment.author.name }}
+                    </a>
                 </div>
             {% endfor %}
         </div>

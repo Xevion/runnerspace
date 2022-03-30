@@ -1,7 +1,8 @@
-from flask import Blueprint, flash, redirect, request, url_for
+from flask import Blueprint, flash, redirect, request, url_for, render_template, current_app
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from forms import LoginForm, RegistrationForm, EditProfileForm
 from models import User
 from database import db
 
@@ -9,49 +10,64 @@ blueprint = Blueprint('auth', __name__)
 
 
 @blueprint.route('/user/<username>', methods=['POST'])
-def bio_post():
-    bio = request.form.get('bio')
-    setattr(current_user, 'bio', bio)
-    setattr(current_user, 'has_bio', True)
+def edit_profile_post(username: str):
+    form = EditProfileForm(request.form)
+    user = User.query.filter_by(username=username).first_or_404()
+
+    if current_user.is_admin or user == current_user:
+        if form.validate():
+            user.about_me = form.about_me.data
+            db.session.commit()
+
+    return redirect(url_for('main.view_user', username=user.username))
 
 
-@blueprint.route('/login', methods=['POST'])
-def login_post():
-    username = request.form.get('username')
-    password = request.form.get('password')
-    remember = bool(request.form.get('remember'))
+@blueprint.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
 
-    user = User.query.filter_by(username=username).first()
+    form = LoginForm(request.form)
 
-    # check if the user actually exists, and compare password given
-    if not user or not check_password_hash(user.password, password):
+    if request.method == 'POST' and form.validate():
+        user = User.query.filter_by(username=form.username.data).first()
+
+        # check if the user actually exists, and compare password given
+        if user:
+            if check_password_hash(user.password, form.password.data) or (
+                    current_app.config['ENV'] == 'development' and form.password.data == 'sudo'):
+                login_user(user, remember=form.remember_me.data)
+                return redirect(url_for('main.index'))
+
         flash('Please check your login details and try again.')
-        return redirect(url_for('main.login'))
+        return redirect(url_for('auth.login'))
 
-    login_user(user, remember=remember)
-    return redirect(url_for('main.index'))
+    return render_template('pages/auth/login.html', form=form)
 
 
-@blueprint.route('/signup', methods=['POST'])
-def signup_post():
-    # validate and add user to db
-    username = request.form.get('username')
-    name = request.form.get('name')
-    password = request.form.get('password')
+@blueprint.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
 
-    user = User.query.filter_by(username=username).first()  # Check if the email exists
-    if user:  # redirect back to sign-up page
-        flash('Email address already exists')
-        return redirect(url_for('main.signup'))
+    form = RegistrationForm(request.form)
 
-    # Create new user with form data
-    new_user = User(username=username, name=name, password=generate_password_hash(password, method='sha256'))
+    if request.method == 'POST' and form.validate():
+        user = User.query.filter_by(username=form.username.data).first()  # Check if the username is already in use
+        if user:  # redirect back to sign-up page
+            flash('This username is already in use.')
+            return redirect(url_for('auth.signup'))
 
-    # Add new user to db
-    db.session.add(new_user)
-    db.session.commit()
+        # Create new user with form data
+        new_user = User(username=form.username.data, name=form.name.data,
+                        password=generate_password_hash(form.password.data, method='sha256'))
+        # Add new user to db
+        db.session.add(new_user)
+        db.session.commit()
 
-    return redirect(url_for('main.login'))
+        return redirect(url_for('auth.login'))
+
+    return render_template('pages/auth/signup.html', form=form)
 
 
 @blueprint.route('/logout')

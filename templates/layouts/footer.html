@@ -3,11 +3,13 @@
         created by <a href="https://github.com/Xevion">Ryan Walters</a> and <a href="https://github.com/Seligmann">Zachary Seligman</a>
     </p>
     <ul class="links">
-        <li><a href="{{ url_for('static', filename='LICENSE.txt') }}">License</a></li>
-        <li><a href="{{ url_for('main.about') }}">About</a></li>
+        <li><a href="{{ url_for('static.license') }}">License</a></li>
+        <li><a href="{{ url_for('static.tos') }}">Terms of Service</a></li>
+{#        <li><a href="{{ url_for('static.privacy') }}">Privacy</a></li>#}
+        <li><a href="{{ url_for('static.about') }}">About</a></li>
     </ul>
     <p class="copyright">
-        <a href="{{ url_for('main.index') }}">©2022 Runnerspace.live All Rights Reserved.</a>
+        <a href="{{ url_for('main.index') }}">©2022 Runnerspace All Rights Reserved.</a>
         | {{ now().isoformat(sep=' ', timespec='milliseconds') }} UTC
     </p>
 </footer>

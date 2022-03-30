@@ -6,10 +6,13 @@ import click
 import pytz
 from faker import Faker
 from flask import Flask, render_template, request
+from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 from database import db
+
+csrf = CSRFProtect()
 
 
 def create_app():
@@ -27,6 +30,7 @@ def create_app():
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', '').replace('postgres://', 'postgresql://', 1)
 
     db.init_app(app)
+    csrf.init_app(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -44,13 +48,20 @@ def create_app():
     from routes import blueprint as routes_blueprint
     app.register_blueprint(routes_blueprint)
 
-    from forms import blueprint as forms_blueprint
+    from route_forms import blueprint as forms_blueprint
     app.register_blueprint(forms_blueprint)
+
+    from static_routes import blueprint as static_blueprint
+    app.register_blueprint(static_blueprint)
 
     @app.errorhandler(404)
     def page_not_found(e):
         # note that we set the 404 status explicitly
         return render_template('errors/404.html'), 404
+
+    @app.errorhandler(CSRFError)
+    def handle_csrf_error(e):
+        return render_template('errors/csrf.html', reason=e.description), 400
 
     @app.before_request
     def update_last_seen():
@@ -59,6 +70,13 @@ def create_app():
             current_user.last_ip = str(request.remote_addr)
             db.session.add(current_user)
             db.session.commit()
+
+    @app.template_filter('pluralize')
+    def pluralize(number, singular='', plural='s'):
+        if number == 1:
+            return singular
+        else:
+            return plural
 
     @app.context_processor
     def inject():
@@ -94,7 +112,7 @@ def create_app():
 
         post_count: int = 0
         for author in random.choices(all_users, k=count // 2):
-            new_post = Post(author=author.id, text=fake.paragraph(nb_sentences=2))
+            new_post = Post(author=author, text=fake.paragraph(nb_sentences=2))
             db.session.add(new_post)
             post_count += 1
 
@@ -104,7 +122,7 @@ def create_app():
         comment_count: int = 0
         for post in Post.query.all():
             for _ in range(random.randint(3, len(all_users) // 4)):
-                new_comment = Comment(text=fake.paragraph(nb_sentences=1), author=random.choice(all_users).id, post=post.id)
+                new_comment = Comment(text=fake.paragraph(nb_sentences=1), author=random.choice(all_users), post=post)
                 db.session.add(new_comment)
                 comment_count += 1
 

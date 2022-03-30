@@ -1,0 +1,19 @@
+{% extends 'layouts/index.html' %}
+
+{% block content %}
+    <div class="content-inner" style="display: flex">
+        <div style="margin: 0 auto;">
+            <h2>400 - Bad CSRF Token</h2>
+            <p>
+                {% if current_user.is_authenticated %}
+                    Sorry <strong>{{ current_user.username }}</strong>, the
+                {% else %}
+                    The
+                {% endif %} form you submitted requires a CSRF token to be valid.
+                <br>
+                This may happen if the form was submitted long after the token was generated, and it has thus expired.
+                <span style="text-align: center">Go <a href="{{ url_for('main.index') }}">home?</a></span>
+            </p>
+        </div>
+    </div>
+{% endblock %}

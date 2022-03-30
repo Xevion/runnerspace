@@ -1,38 +1,18 @@
 {% extends 'layouts/index.html' %}
+{% from "macros.html" import render_field %}
 
 {% block content %}
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="notification is-danger">
-                    {{ messages[0] }}. Go to <a href="{{ url_for('main.login') }}">login page</a>.
-                </div>
-            {% endif %}
-        {% endwith %}
-        <form method="POST" action="{{ url_for('auth.signup_post') }}" class="login-form">
-            <div class="field">
-                <div class="control">
-                    Username
-                    <input class="input is-large" type="text" name="username" placeholder="Username" autofocus>
-                </div>
-            </div>
+    <form method=post class="login-form">
+        {{ form.csrf_token }}
+        {{ render_field(form.username) }}
+        {{ render_field(form.name) }}
+        {{ render_field(form.password) }}
+        {{ render_field(form.confirm) }}
+        {{ render_field(form.accept_tos) }}
+        <input type=submit value=Register>
+    </form>
 
-            <div class="field">
-                <div class="control">
-                    Name
-                    <input class="input is-large" type="text" name="name" placeholder="Name" autofocus>
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    Password
-                    <input class="input is-large" type="password" name="password" placeholder="Password">
-                </div>
-            </div>
-            <button>Sign Up</button>
-        </form>
-
-        <p class="form-subtext">
-            Already have a login? <a href="{{ url_for('main.login') }}">Login</a> instead!
-        </p>
+    <p class="form-subtext">
+        Already have a login? <a href="{{ url_for('auth.login') }}">Login</a> instead!
+    </p>
 {% endblock content %}
