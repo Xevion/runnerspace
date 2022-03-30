@@ -1,21 +1,23 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    <div style="display: flex;">
-        <div class="new-users" style="margin: 2em;">
-            <h2>New Users</h2>
-            <div>
-                <ul>
-                    {% for new_user in new_users %}
-                        <li><a href="{{ url_for('main.view_user', username=new_user.username) }}">{{ new_user.username }}</a> as
-                            of {{ new_user.get_registration_delta() }} ago
-                        </li>
-                    {% endfor %}
-                </ul>
+    <div class="index-flex">
+        {% if new_users|length > 0 %}
+            <div class="new-users" style="margin: 2em;">
+                <h2>New Users</h2>
+                <div>
+                    <ul>
+                        {% for new_user in new_users %}
+                            <li><a href="{{ url_for('main.view_user', username=new_user.username) }}">{{ new_user.username }}</a> as
+                                of {{ new_user.get_registration_delta() }} ago
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-        </div>
+        {% endif %}
         <div class="statistics" style="margin: 1em;">
-            <h2>runnerspace Statistics</h2>
+            <h2>Runnerspace Statistics</h2>
             {% with comments = stats['total_comments'], posts = stats['total_posts'], users = stats['total_users'] %}
                 <div>
                     <div>

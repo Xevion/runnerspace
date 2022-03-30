@@ -367,24 +367,28 @@ nav, footer {
   }
 }
 
-.new-users, .statistics {
-  margin-top: 0 !important;
+.index-flex {
+  display: flex;
+  justify-content: space-around;
+  .new-users, .statistics {
+    margin-top: 0 !important;
 
-  > div {
-    border: 1px solid grey;
-    padding: 0.2em;
-    width: fit-content;
-    padding-right: 1.5em;
+    > div {
+      border: 1px solid grey;
+      padding: 0.2em;
+      width: fit-content;
+      padding-right: 1.5em;
 
-    a {
-      text-decoration: none;
+      a {
+        text-decoration: none;
+      }
     }
   }
-}
 
-.statistics > div {
-  min-height: 235px;
-  margin: 1em;
+  .statistics > div {
+    min-height: 235px;
+    margin: 1em;
+  }
 }
 
 span.error-message {

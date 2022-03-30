@@ -309,20 +309,23 @@ nav .links li:not(:last-child)::after, footer .links li:not(:last-child)::after 
   text-decoration: none;
 }
 
-.new-users, .statistics {
+.index-flex {
+  display: flex;
+  justify-content: space-around;
+}
+.index-flex .new-users, .index-flex .statistics {
   margin-top: 0 !important;
 }
-.new-users > div, .statistics > div {
+.index-flex .new-users > div, .index-flex .statistics > div {
   border: 1px solid grey;
   padding: 0.2em;
   width: fit-content;
   padding-right: 1.5em;
 }
-.new-users > div a, .statistics > div a {
+.index-flex .new-users > div a, .index-flex .statistics > div a {
   text-decoration: none;
 }
-
-.statistics > div {
+.index-flex .statistics > div {
   min-height: 235px;
   margin: 1em;
 }
