@@ -55,17 +55,17 @@ class User(UserMixin, db.Model):
         """Returns the number of comments this user has made."""
         return Comment.query.filter_by(user_id=self.id).count()
 
-    # def get_post_likes(self) -> int:
-    #     """Returns the number of likes this user's posts have accumulated."""
-    #     return PostLike.query.filter_by().count()
-    #
-    # def get_comment_likes(self) -> int:
-    #     """Returns the number of likes this user's comment shave accumulated"""
-    #     return CommentLike.query(func.sum()).scalar()
+    def get_post_likes(self) -> int:
+        """Returns the number of likes this user's posts have accumulated."""
+        return sum(PostLike.query.filter_by(post=post).count() for post in self.posts)
 
-    # def get_all_likes(self) -> int:
-    #     """Returns the number of likes this user's posts and comments have accumulated"""
-    #     return self.get_post_likes() + self.get_comment_likes()
+    def get_comment_likes(self) -> int:
+        """Returns the number of likes this user's comment shave accumulated"""
+        return sum(CommentLike.query.filter_by(comment=comment).count() for comment in self.comments)
+
+    def get_all_likes(self) -> int:
+        """Returns the number of likes this user's posts and comments have accumulated"""
+        return self.get_post_likes() + self.get_comment_likes()
 
     def display_about(self) -> str:
         return self.about_me or "This user hasn't written a bio yet."
