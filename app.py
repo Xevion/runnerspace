@@ -27,13 +27,13 @@ def create_app():
 
     # Heroku deployment
     if app.config['ENV'] == 'production':
-        # Deal with spacy model downloading
-        spacy_model = 'en_core_web_sm'
-        try:
-            spacy.load(spacy_model)
-        except:  # If not present, we download
-            spacy.cli.download(spacy_model)
-            spacy.load(spacy_model)
+        # # Deal with spacy model downloading
+        # spacy_model = 'en_core_web_sm'
+        # try:
+        #     spacy.load(spacy_model)
+        # except:  # If not present, we download
+        #     spacy.cli.download(spacy_model)
+        #     spacy.load(spacy_model)
 
         app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', '').replace('postgres://', 'postgresql://', 1)
