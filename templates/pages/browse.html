@@ -11,7 +11,7 @@
                     <span class="user-box-username">
                         <a href="{{ url_for('main.view_user', username=user.username) }}">{{ user.name }}</a>
                     </span>
-                                {% with seen_text = user.get_last_seen() %}
+                                {% with seen_text = user.get_last_seen_text() %}
                                     {% if seen_text == 'Online now!' %}
                                         <span class="user-box-timestamp online">{{ seen_text }}</span>
                                     {% else %}
