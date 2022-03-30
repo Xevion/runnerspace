@@ -1,7 +1,9 @@
 {% extends 'layouts/index.html' %}
 {% from 'macros.html' import render_field %}
-{% set use_jquery = true %}
-{% set use_likes = true %}
+{% if current_user.is_authenticated %}
+    {% set use_jquery = true %}
+    {% set use_likes = true %}
+{% endif %}
 
 {% block content %}
     {% if current_user.is_authenticated %}

@@ -1,18 +1,28 @@
 {% extends 'layouts/index.html' %}
+{% set use_jquery = true %}
+{% set use_likes = true %}
+
 {% block content %}
-    <div class="post-box">
+    <div id="post-{{ post.id }}" class="post-box">
+        {% if current_user.is_authenticated %}
+            <i class="fas fa-heart {% if current_user.has_liked_post(post.id) %}liked{% endif %}" onclick="like({{ post.id }})"></i>
+        {% endif %}
         {{ post.text }}
         <br>
         <div class="post-author">
-            <em>Posted by <a href="{{ url_for('main.view_user', username=post.author.username) }}">{{ post.author.name }}</a></em> <span
-                title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>.
+            {% with comment_count = post.comments|length %}
+                <em>Posted by <a href="{{ url_for('main.view_user', username=post.author.username) }}">{{ post.author.name }}</a></em>
+                <span title="{{ post.date_posted }}">{{ post.get_time_ago() }} ago</span>. |
+                <a href="{{ url_for('main.view_post', post_id=post.id) }}"><span> {{ comment_count }} comment{{ comment_count|pluralize }}</span></a>
+                | <span class="post-like-status">{{ post.get_like_text()|safe }}</span>
+            {% endwith %}
         </div>
         <div class="post-comments">
             {% if current_user.is_authenticated %}
                 <div class="post-comment add-comment">
                     <form method="POST" action="{{ url_for('forms.add_comment', post_id=post.id) }}">
                         {{ form.csrf_token }}
-                        {{ form.text }}<input type=submit value="Add Comment">
+                        {{ form.text()|safe }}<input type=submit value="Add Comment">
                     </form>
                 </div>
             {% endif %}
