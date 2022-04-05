@@ -12,6 +12,14 @@ inspiration from my-space and other social media services of its era.
 
 We made this app starting almost 5 hours after this 24-hour Hackathon started and were able to successfully present a finished demo for judging at RowdyHacks 2022.
 
+## Screenshots
+
+![Feed Screenshot](./.media/feed.png)
+![Index Screenshot](./.media/index.png)
+![Sign-up Screenshot](./.media/signup.png)
+![Post Comments Screenshot](./.media/comments.png)
+![Profile Screenshot](./.media/profile.png)
+
 ## Features
 
 - Accounts
