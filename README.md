@@ -1,6 +1,6 @@
 # runnerspace
 
-[![Runnerspace Banner](banner-url)](heroku-url)
+[![Runnerspace Banner][banner-url]](heroku-url)
 
 Runnerspace is a retro, UTSA-themed MySpace clone made in less than 36 hours during RowdyHacks 2022. It was intended for the 'Retro' challenge
 and has been further overhauled afterwards to become a portfolio project, hosted on Heroku. Check it out by clicking on the banner or [here][heroku-url].
