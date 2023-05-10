@@ -27,7 +27,7 @@ def create_app():
         app.config['SECRET_KEY'] = 'secret key goes here'
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
-    # Heroku deployment
+    # Production deployment
     if app.config['ENV'] == 'production':
         app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', '').replace('postgres://', 'postgresql://', 1)
@@ -143,7 +143,7 @@ def create_app():
     return app
 
 
-# Only used for Heroku; use 'flask run' or internal IDE configurations otherwise
+# Only used for Railway; use 'flask run' or internal IDE configurations otherwise
 app = create_app()
 if __name__ == '__main__':
     app.run()

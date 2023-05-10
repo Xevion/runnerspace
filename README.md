@@ -1,9 +1,9 @@
 # runnerspace
 
-[![Runnerspace Banner][banner-url]](heroku-url)
+[![Runnerspace Banner][banner-url]](deployment-url)
 
 Runnerspace is a retro, UTSA-themed MySpace clone made in less than 36 hours during RowdyHacks 2022. It was intended for the 'Retro' challenge
-and has been further overhauled afterwards to become a portfolio project, hosted on Heroku. Check it out by clicking on the banner or [here][heroku-url].
+and has been further overhauled afterwards to become a portfolio project, hosted on Railway. Check it out by clicking on the banner or [here][deployment-url].
 
 ## About
 
@@ -41,7 +41,7 @@ We made this app starting almost 5 hours after this 24-hour Hackathon started an
         - Image used, although text-based logo fallback available
 - Misc
     - Easy install & setup with `pipenv`
-    - Hosted on [Heroku][heroku-url]!
+    - Hosted on [Railway][deployment-url]!
     - Profanity filtering
     - Human + Computer Readable Timestamps
         - "3 minutes ago" and such...
@@ -57,7 +57,7 @@ We made this app starting almost 5 hours after this 24-hour Hackathon started an
     - SQLAlchemy + SQLite
 - Sass
 - Font Awesome Icons
-- Heroku
+- Railway
 - Other
     - Humanize
     - Faker
@@ -75,4 +75,4 @@ flask run
 
 
 [banner-url]: ./static/runnerspace-banner-slim.png
-[heroku-url]: https://runnerspace-utsa.herokuapp.com/
+[deployment-url]: https://runnerspace.xevion.dev/
