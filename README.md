@@ -2,15 +2,22 @@
 
 [![Runnerspace Banner][banner-url]][deployment-url]
 
-Runnerspace is a retro, UTSA-themed MySpace clone made in less than 36 hours during RowdyHacks 2022. It was intended for the 'Retro' challenge
-and has been further overhauled afterwards to become a portfolio project, hosted on Railway. Check it out by clicking on the banner or [here][deployment-url].
+Introducing Runnerspace - a retro, UTSA-themed MySpace clone developed as part of the 'Retro' challenge during
+RowdyHacks 2022. This project was completed in under 36 hours and has since been further enhanced to serve as a
+portfolio project, now hosted on Railway.
+
+<div align="center">
+  Explore Runnerspace by clicking <a href="https:/runnerspace.xevion.dev">here</a>.
+</div>
 
 ## About
 
-Made during Rowdy Hacks 2022, this myspace look-a-like was quickly made with intentions of serving the UTSA student community. We took heavy
-inspiration from my-space and other social media services of its era.
+Our team created a MySpace-inspired platform for the UTSA student community during RowdyHacks 2022. Drawing inspiration
+from the popular social media services of its era, we developed the application in just under 24 hours and presented a
+fully-functional demo for judging at the event.
 
-We made this app starting almost 5 hours after this 24-hour Hackathon started and were able to successfully present a finished demo for judging at RowdyHacks 2022.
+Despite starting almost 5 hours into the hackathon, we were able to
+deliver a polished product that captured the retro essence of MySpace.
 
 ## Screenshots
 
@@ -31,7 +38,7 @@ We made this app starting almost 5 hours after this 24-hour Hackathon started an
     - Online and Offline account flags
 - Posts
     - Post Creation
-      - Comment posting
+        - Comment posting
     - Post Feed + Comment Stats
     - AJAX Post Liking System
 - Appearance
@@ -73,6 +80,6 @@ pipenv install
 flask run
 ```
 
-
 [banner-url]: ./static/runnerspace-banner-slim.png
+
 [deployment-url]: https://runnerspace.xevion.dev/
