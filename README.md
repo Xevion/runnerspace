@@ -7,7 +7,7 @@ RowdyHacks 2022. This project was completed in under 36 hours and has since been
 portfolio project, now hosted on Railway.
 
 <div align="center">
-  Explore Runnerspace by clicking <a href="https:/runnerspace.xevion.dev">here</a>.
+  Explore Runnerspace by clicking <a href="https://runnerspace.xevion.dev">here</a>.
 </div>
 
 ## About
