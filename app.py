@@ -4,15 +4,18 @@ from datetime import datetime
 
 import click
 import pytz
+from dotenv import load_dotenv
 from faker import Faker
 from flask import Flask, render_template, request
-from flask_wtf.csrf import CSRFProtect, CSRFError
 from flask_login import LoginManager, current_user
-from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect, CSRFError
 from werkzeug.security import generate_password_hash
+
 from database import db
 
 csrf = CSRFProtect()
+
+load_dotenv()
 
 
 def create_app():
