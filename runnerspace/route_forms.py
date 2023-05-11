@@ -1,8 +1,8 @@
 from flask import Blueprint, flash, redirect, request, url_for, render_template
 from flask_login import current_user, login_required
-from forms import RegistrationForm, EditProfileForm, NewPostForm, NewCommentForm
-from database import db
-from models import User, Post, Comment
+from runnerspace.forms import RegistrationForm, EditProfileForm, NewPostForm, NewCommentForm
+from runnerspace.database import db
+from runnerspace.models import User, Post, Comment
 
 blueprint = Blueprint('forms', __name__)
 

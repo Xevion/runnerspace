@@ -1,13 +1,11 @@
 import datetime
-import json
-from typing import List
 
 import humanize
 from flask import url_for
 from flask_login import UserMixin
 from sqlalchemy import func
 
-from database import db
+from runnerspace.database import db
 
 # Amount of time before a user is considered 'offline'
 MAXIMUM_ONLINE_DELTA = datetime.timedelta(minutes=3)

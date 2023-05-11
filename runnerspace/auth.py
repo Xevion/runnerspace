@@ -2,9 +2,9 @@ from flask import Blueprint, flash, redirect, request, url_for, render_template,
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from forms import LoginForm, RegistrationForm, EditProfileForm
-from models import User
-from database import db
+from runnerspace.forms import LoginForm, RegistrationForm, EditProfileForm
+from runnerspace.models import User
+from runnerspace.database import db
 
 blueprint = Blueprint('auth', __name__)
 

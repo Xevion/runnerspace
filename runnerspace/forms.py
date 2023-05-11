@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, StringField, PasswordField, TextAreaField, validators
 
-from validators import NoProfanity
+from runnerspace.validators import NoProfanity
 
 
 class RegistrationForm(FlaskForm):

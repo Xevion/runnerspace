@@ -1,9 +1,9 @@
 from flask import Blueprint, redirect, render_template, url_for, request, jsonify
 from flask_login import current_user, login_required
 
-from models import User, Post, Comment, PostLike, CommentLike
-from forms import NewPostForm, NewCommentForm, EditProfileForm
-from database import db
+from runnerspace.models import User, Post, Comment, PostLike, CommentLike
+from runnerspace.forms import NewPostForm, NewCommentForm, EditProfileForm
+from runnerspace.database import db
 
 blueprint = Blueprint('main', __name__)
 

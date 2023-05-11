@@ -11,7 +11,7 @@ from flask_login import LoginManager, current_user
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from werkzeug.security import generate_password_hash
 
-from database import db
+from runnerspace.database import db
 
 csrf = CSRFProtect()
 
@@ -39,22 +39,22 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
-    from models import User, Post, Comment
+    from runnerspace.models import User, Post, Comment
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    from auth import blueprint as auth_blueprint
+    from runnerspace.auth import blueprint as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    from routes import blueprint as routes_blueprint
+    from runnerspace.routes import blueprint as routes_blueprint
     app.register_blueprint(routes_blueprint)
 
-    from route_forms import blueprint as forms_blueprint
+    from runnerspace.route_forms import blueprint as forms_blueprint
     app.register_blueprint(forms_blueprint)
 
-    from static_routes import blueprint as static_blueprint
+    from runnerspace.static_routes import blueprint as static_blueprint
     app.register_blueprint(static_blueprint)
 
     @app.errorhandler(404)
