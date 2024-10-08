@@ -70,7 +70,7 @@ def create_app():
     def update_last_seen():
         if current_user.is_authenticated:
             current_user.last_seen = datetime.now(tz=pytz.UTC)  # datetime.utcnow doesn't actually attach a timezone
-            current_user.last_ip = str(request.remote_addr)
+            current_user.last_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
             db.session.add(current_user)
             db.session.commit()
 
