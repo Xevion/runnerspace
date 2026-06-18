@@ -8,12 +8,6 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# psycopg2 (not -binary) compiles from source: needs a C toolchain and the
-# libpq headers / pg_config that libpq-dev provides.
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
 RUN pip install pipenv
 
 WORKDIR /app

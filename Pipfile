@@ -13,7 +13,6 @@ pytz = "*"
 faker = "*"
 humanize = "*"
 gunicorn = "*"
-psycopg2 = "*"
 flask-wtf = "*"
 better-profanity = "*"
 
